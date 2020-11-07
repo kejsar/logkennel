@@ -1,25 +1,29 @@
 <?php
 
 define("DS", DIRECTORY_SEPARATOR);
-define("ROOT", dirname(__FILE__) . DS);
+define("ROOT_DIR", dirname(__FILE__) . DS);
 
-require ROOT . "pages" . DS . "parts" . DS . "code.php";
+define("BLOCKS_DIR",  ROOT_DIR . "blocks" . DS);
+define("ADMIN_DIR",   ROOT_DIR . "pages"  . DS . "admin"   . DS);
+define("CONTENT_DIR", ROOT_DIR . "pages"  . DS . "content" . DS);
+define("PARTS_DIR",   ROOT_DIR . "pages"  . DS . "parts"   . DS);
+define("DB_DIR",      ROOT_DIR . "db"     . DS);
 
-// require ROOT . "db" . DS . "create.php";
-require ROOT . "db" . DS . "update.php";
+require DB_DIR . "init_db.php";
+require DB_DIR . "read.php";
+
+require PARTS_DIR . "init.php";
 
 ?><!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-
-<?php require ROOT . "pages" . DS . "parts" . DS . "head.php"; ?>
-
+<?php require PARTS_DIR . "head.php"; ?>
 </head>
 <body>
 
-<?php require ROOT . "pages" . DS . PAGE . ".php"; ?>
+<?php require PARTS_DIR . "content.php"; ?>
 
-<?php require ROOT . "pages" . DS . "parts" . DS . "scripts.php"; ?>
+<?php require PARTS_DIR . "scripts.php"; ?>
 
 </body>
 </html>

@@ -1,12 +1,10 @@
 <?php
 
-require ROOT . "db" . DS . "init.php";
-
-function delete_rate($id) {
-  $sql = "DELETE FROM `currency` WHERE id = :id";
+function delete_block($conn, $block_id) {
+  $sql = "DELETE FROM `block` 
+            WHERE `id` = :block_id";
   $sth = $conn->prepare($sql);
-  $result = $sth->execute(array(
-    ":id" => $id
+  return $sth->execute(array(
+    ":block_id" => $block_id
   ));
-  return $result;
 }
