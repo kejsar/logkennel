@@ -1,9 +1,9 @@
 
-<section class="contact">
+<section class="puppies">
   <div class="container">
     <div class="row">
       <div class="col">
-        contact
+        <p>admin block edit</p>
       </div>
     </div>
   </div>

@@ -54,11 +54,38 @@ function get_block_text($conn, $block_id, $lang_id) {
 // READ DOG
 // ============================================================================
 
-function get_dogs($conn) {
-  $sql = "SELECT *
-            FROM `dog`";
+function get_dogs($conn, $search_type, $lang_id) {
+  $sql = "SELECT 
+              `dog`.`id`,
+              `dog`.`birth`,
+              `dog`.`teeth`,
+              `dog`.`patella`,
+              `dog`.`owner`,
+              `dog`.`after`,
+              `dog`.`under`,
+              `dog`.`puppy`,
+              `dog_gender`.`gender`,
+              `dog_image`.`link`,
+              `dog_image`.`alt`,
+              `dog_name`.`dog_name`
+            FROM `dog`
+            INNER JOIN `dog_gender` ON `dog`.`gender_type` = `dog_gender`.`gender_type`
+            INNER JOIN `dog_image`  ON `dog`.`id` = `dog_image`.`dog_id`
+            INNER JOIN `dog_name`   ON `dog`.`id` = `dog_name`.`dog_id`
+
+            WHERE ";
+
+  if ($search_type === "males")   $sql .= " `dog`.`gender_type` = '1' AND ";
+  if ($search_type === "females") $sql .= " `dog`.`gender_type` = '0' AND ";
+  if ($search_type === "puppies") $sql .= " `dog`.`puppy` = '1' AND ";
+
+  $sql .= "   `dog_gender`.`lang_id` = :lang_id
+
+            ORDER BY `dog`.`id` ASC";
   $sth = $conn->prepare($sql);
-  $sth->execute();
+  $sth->execute(array(
+    ":lang_id" => $lang_id
+  ));
   return $sth->fetchAll();
 }
 
@@ -73,17 +100,18 @@ function get_dog($conn, $dog_id) {
   return $sth->fetch();
 }
 
-function get_gender($conn, $gender_id, $lang_id) {
-  $sql = "SELECT *
-            FROM `gender`
-            WHERE `id` = :gender_id
+function get_gender_name($conn, $gender_type, $lang_id) {
+  $sql = "SELECT `gender`
+            FROM `dog_gender`
+            WHERE `gender_type` = :gender_type
               AND `lang_id` = :lang_id";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
-    ":gender_id" => $gender_id,
+    ":gender_type" => $gender_type,
     ":lang_id" => $lang_id
   ));
-  return $sth->fetch();
+  $result = $sth->fetch();
+  return $result["gender"];
 }
 
 function get_dog_image_main($conn, $dog_id) {
@@ -107,6 +135,19 @@ function get_dog_images($conn, $dog_id) {
     ":dog_id" => $dog_id
   ));
   return $sth->fetchAll();
+}
+
+function get_dog_results($conn, $dog_id, $lang_id) {
+  $sql = "SELECT `result_text`
+            FROM `dog_result`
+            WHERE `dog_id` = :dog_id
+              AND `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":dog_id" => $dog_id,
+    ":lang_id" => $lang_id
+  ));
+  return $sth->fetchAll(PDO::FETCH_COLUMN, 0);
 }
 
 // ============================================================================
@@ -156,6 +197,31 @@ function get_menu($conn, $lang) {
   $sth = $conn->prepare($sql);
   $sth->execute(array(
     ":lang" => $lang
+  ));
+  return $sth->fetchAll();
+}
+
+// ============================================================================
+// READ ADMIN MENU
+// ============================================================================
+
+function get_admin_menu_links($conn) {
+  $sql = "SELECT `link` 
+            FROM `admin_menu`";
+  $sth = $conn->prepare($sql);
+  $sth->execute();
+  return $sth->fetchAll(PDO::FETCH_COLUMN, 0);
+}
+
+function get_admin_menu($conn, $lang_id) {
+  $sql = "SELECT `admin_menu`.`link`, `admin_menu_title`.`menu_title`
+            FROM `admin_menu`
+            INNER JOIN `admin_menu_title` ON `admin_menu`.`id` = `admin_menu_title`.`menu_id`
+            WHERE `admin_menu_title`.`lang_id` = :lang_id
+            ORDER BY `admin_menu`.`id` ASC";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":lang_id" => $lang_id
   ));
   return $sth->fetchAll();
 }

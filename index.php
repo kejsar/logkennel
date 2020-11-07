@@ -12,10 +12,11 @@ define("DB_DIR",      ROOT_DIR . "db"     . DS);
 require DB_DIR . "init_db.php";
 require DB_DIR . "read.php";
 
+require PARTS_DIR . "auth.php";
 require PARTS_DIR . "init.php";
 
 ?><!DOCTYPE html>
-<html lang="ru">
+<html lang="<?=LANG?>">
 <head>
 <?php require PARTS_DIR . "head.php"; ?>
 </head>

@@ -13,15 +13,6 @@ function delete_block_by_block_id($conn, $block_id) {
   ));
 }
 
-function delete_block_by_block_name($conn, $block_name) {
-  $sql = "DELETE FROM `block` 
-            WHERE `block_name` = :block_name";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":block_name" => $block_name
-  ));
-}
-
 // ============================================================================
 // DELETE DOG
 // ============================================================================
@@ -57,7 +48,7 @@ function delete_dog_result($conn, $result_id) {
 // DELETE NEWS
 // ============================================================================
 
-function delete_news_by_news_id($conn, $news_id) {
+function delete_news($conn, $news_id) {
   $sql = "DELETE FROM `news` 
             WHERE `id` = :news_id";
   $sth = $conn->prepare($sql);

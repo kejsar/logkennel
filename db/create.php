@@ -58,21 +58,37 @@ function add_new_block($conn, $name, $title, $text, $lang)
 // ADD DOG
 // ============================================================================
 
-function add_dog($conn, $birth, $teeth, $patella, $owner, $after, $under, $gender_id)
+function add_dog($conn, $birth, $teeth, $patella, $owner, $after, $under, $gender_type, $puppy)
 {
   $sql = "INSERT INTO `dog` 
-              (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`, `gender_id`) 
+              (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`, `gender_type`, `puppy`) 
             VALUES 
-              (NULL, :birth, :teeth, :patella, :owner, :after, :under, :gender_id)";
+              (NULL, :birth, :teeth, :patella, :owner, :after, :under, :gender_type, :puppy)";
   $sth = $conn->prepare($sql);
   $result = $sth->execute(array(
-    ":birth"     => $birth,
-    ":teeth"     => $teeth,
-    ":patella"   => $patella,
-    ":owner"     => $owner,
-    ":after"     => $after,
-    ":under"     => $under,
-    ":gender_id" => $gender_id,
+    ":birth"       => $birth,
+    ":teeth"       => $teeth,
+    ":patella"     => $patella,
+    ":owner"       => $owner,
+    ":after"       => $after,
+    ":under"       => $under,
+    ":gender_type" => $gender_type,
+    ":puppy"       => $puppy
+  ));
+  return $result ? $conn->lastInsertId() : false;
+}
+
+function add_dog_name($conn, $dog_id, $dog_name, $lang_id)
+{
+  $sql = "INSERT INTO `dog_name` 
+              (`id`, `dog_id`, `dog_name`, `lang_id`) 
+            VALUES 
+              (NULL, :dog_id, :dog_name, :lang_id)";
+  $sth = $conn->prepare($sql);
+  $result = $sth->execute(array(
+    ":dog_id" => $dog_id,
+    ":dog_name" => $dog_name,
+    ":lang_id" => $lang_id
   ));
   return $result ? $conn->lastInsertId() : false;
 }
