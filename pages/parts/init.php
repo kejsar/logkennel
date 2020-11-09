@@ -1,17 +1,5 @@
 <?php
 
-// SET LANG
-
-define("LANG", 1);
-
-// SET SITE
-
-function set_site()
-{
-  $site = (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on" ? "https" : "http") . "://" . $_SERVER["HTTP_HOST"] . "/";
-  define("SITE", $site);
-}
-
 // SET PATH
 
 function get_path()
@@ -81,5 +69,4 @@ function set_path($conn)
   }
 }
 
-set_site();
 set_path($conn);
