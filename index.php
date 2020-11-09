@@ -32,12 +32,6 @@ require PARTS_DIR . "init.php";
 </head>
 <body>
 
-<form action="<?=SITE?>" method="post" enctype=multipart/form-data>
-  <label for="imageinput">Select a file:</label>
-  <input type="file" name="imageinput" id="imageinput"><br><br>
-  <input type="submit" value="Upload Image" name="img-upload">
-</form>
-
 <?php require PARTS_DIR . "content.php"; ?>
 
 <?php require PARTS_DIR . "scripts.php"; ?>

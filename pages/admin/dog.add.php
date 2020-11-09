@@ -12,6 +12,20 @@
             <input type="hidden" name="dog" value="add">
 
             <div class="form-group row">
+              <div class="col">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="imageinputaddon">Upload</span>
+                  </div>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="image-input" id="imageinput" aria-describedby="imageinputaddon">
+                    <label for="imageinput" class="custom-file-label">Choose file</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
               <label for="dog-name" class="col-sm-4 col-form-label">Name</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="dog-name" name="dog_name">
