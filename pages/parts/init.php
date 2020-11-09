@@ -52,24 +52,26 @@ function set_path($conn)
 
     define("PAGE", "main");
 
-  } elseif (   (count($path) === 1 || count($path) === 2 || count($path) === 3) 
-            && (page_exists($conn, $path[0]) || $path[0] === "admin")
-  ) {
+  } elseif ((count($path) < 5) && (page_exists($conn, $path[0]) || $path[0] === "admin")) {
 
     if (count($path) === 1) {
       define("PAGE", $path[0]);
     } else {
 
-      if (   ($path[0] === "admin" && (!admin_page_exists($conn, $path[1]) || (count($path) === 3 && $path[1] === "main"))
-          || ($path[0] !== "admin" && count($path) === 3))
+      if (   ($path[0] === "admin" && !admin_page_exists($conn, $path[1])
+          || (count($path) === 4 && !is_numeric($path[3]))
+          || ($path[0] !== "admin" && count($path) > 2))
       ) {
         return_404();
       }
 
       define("SECTION", $path[0]);
       define("PAGE", $path[1]);
-      if (count($path) === 3) {
+      if (count($path) === 3 || count($path) === 4) {
         define("SUBPAGE", $path[2]);
+        if (isset($path[3])) {
+          define("SUBSUBPAGE", $path[3]);
+        }
       }
 
     }

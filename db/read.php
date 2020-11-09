@@ -79,7 +79,8 @@ function get_dogs($conn, $search_type, $lang_id) {
   if ($search_type === "females") $sql .= " `dog`.`gender_type` = '0' AND ";
   if ($search_type === "puppies") $sql .= " `dog`.`puppy` = '1' AND ";
 
-  $sql .= "   `dog_gender`.`lang_id` = :lang_id
+  $sql .= "        `dog_gender`.`lang_id` = :lang_id
+              AND  `dog_name`.`lang_id` = :lang_id
 
             ORDER BY `dog`.`id` ASC";
   $sth = $conn->prepare($sql);
@@ -89,15 +90,35 @@ function get_dogs($conn, $search_type, $lang_id) {
   return $sth->fetchAll();
 }
 
-function get_dog($conn, $dog_id) {
-  $sql = "SELECT *
+function get_dog($conn, $dog_id, $lang_id) {
+  $sql = "SELECT 
+              `dog`.`id`,
+              `dog`.`birth`,
+              `dog`.`gender_type`,
+              `dog`.`teeth`,
+              `dog`.`patella`,
+              `dog`.`owner`,
+              `dog`.`after`,
+              `dog`.`under`,
+              `dog`.`puppy`,
+              `dog_image`.`link`,
+              `dog_image`.`alt`,
+              `dog_name`.`dog_name`
             FROM `dog`
-            WHERE `id` = :dog_id";
+            INNER JOIN `dog_image`  ON `dog`.`id` = `dog_image`.`dog_id`
+            INNER JOIN `dog_name`   ON `dog`.`id` = `dog_name`.`dog_id`
+
+            WHERE `dog`.`id` = :dog_id
+              AND `dog_name`.`lang_id` = :lang_id
+
+            ORDER BY `dog`.`id` ASC";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
-    ":dog_id" => $dog_id
+    ":dog_id" => $dog_id,
+    ":lang_id" => $lang_id
   ));
-  return $sth->fetch();
+  $result = $sth->fetchAll();
+  return $result[0];
 }
 
 function get_gender_name($conn, $gender_type, $lang_id) {

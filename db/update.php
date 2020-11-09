@@ -48,27 +48,44 @@ function update_block_text($conn, $block_text, $block_id, $lang_id)
 // UPDATE DOG
 // ============================================================================
 
-function update_dog($conn, $birth, $teeth, $patella, $owner, $after, $under, $gender_id, $dog_id)
+function update_dog($conn, $birth, $puppy, $teeth, $patella, $owner, $after, $under, $gender_type, $dog_id)
 {
   $sql = "UPDATE `dog` SET 
-              `birth`     => :birth,
-              `teeth`     => :teeth,
-              `patella`   => :patella,
-              `owner`     => :owner,
-              `after`     => :after,
-              `under`     => :under,
-              `gender_id` => :gender_id,
+              `birth`     = :birth,
+              `puppy`     = :puppy,
+              `teeth`     = :teeth,
+              `patella`   = :patella,
+              `owner`     = :owner,
+              `after`     = :after,
+              `under`     = :under,
+              `gender_type` = :gender_type
             WHERE `id` = :dog_id";
   $sth = $conn->prepare($sql);
+  // var_dump($sth->debugDumpParams());
   return $sth->execute(array(
     ":birth"     => $birth,
+    ":puppy"     => $puppy,
     ":teeth"     => $teeth,
     ":patella"   => $patella,
     ":owner"     => $owner,
     ":after"     => $after,
     ":under"     => $under,
-    ":gender_id" => $gender_id,
+    ":gender_type" => $gender_type,
     ":dog_id"    => $dog_id
+  ));
+}
+
+function update_dog_name($conn, $dog_id, $dog_name, $lang_id)
+{
+  $sql = "UPDATE `dog_name` SET
+              `dog_name` = :dog_name
+            WHERE `dog_id` = :dog_id
+              AND  `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  return $result = $sth->execute(array(
+    ":dog_id" => $dog_id,
+    ":dog_name" => $dog_name,
+    ":lang_id" => $lang_id
   ));
 }
 
@@ -90,10 +107,11 @@ function update_dog_image($conn, $dog_id, $link, $alt, $main)
 
 function update_dog_result($conn, $dog_id, $result_text, $lang_id)
 {
+  var_dump($dog_id, $result_text, $lang_id);
   $sql = "UPDATE `dog_result` SET
-              `result_text` = :result_text,
-              `lang_id` = :lang_id
-            WHERE `dog_id` = :dog_id";
+              `result_text` = :result_text
+            WHERE `dog_id` = :dog_id
+              AND  `lang_id` = :lang_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
     ":result_text" => $result_text,

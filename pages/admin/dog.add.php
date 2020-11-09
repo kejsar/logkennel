@@ -9,6 +9,8 @@
         <div class="row justify-content-center">
           <form class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6" action="<?php echo SITE; ?>admin/dog" method="post">
 
+            <input type="hidden" name="dog" value="add">
+
             <div class="form-group row">
               <label for="dog-name" class="col-sm-4 col-form-label">Name</label>
               <div class="col-sm-8">

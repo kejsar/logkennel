@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 07, 2020 at 07:27 PM
+-- Generation Time: Nov 09, 2020 at 10:47 AM
 -- Server version: 10.3.22-MariaDB
 -- PHP Version: 7.1.33
 
@@ -124,15 +124,24 @@ CREATE TABLE `dog` (
   `owner` varchar(255) DEFAULT NULL,
   `after` varchar(255) DEFAULT NULL,
   `under` varchar(255) DEFAULT NULL,
-  `gender_type` tinyint(1) UNSIGNED NOT NULL
+  `gender_type` tinyint(1) UNSIGNED NOT NULL,
+  `puppy` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `dog`
 --
 
-INSERT INTO `dog` (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`, `gender_type`) VALUES
-(1, '1928-01-01', 'sdfg', 'wert', 'ytu', 'tyuk', 'fgh', 1);
+INSERT INTO `dog` (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`, `gender_type`, `puppy`) VALUES
+(1, '1928-01-01', 'sdfg', 'wert', 'ytu', 'tyuk', 'fgh', 1, 0),
+(2, '1985-10-04', 'afsdgar', 'awsrtwqer', 'gdfsgdfg', 'xcvbsd', 'gsaergsdf', 1, 0),
+(3, '1990-03-03', 'asdfa', 'dgasd', 'fgdsf', 'ghsdf', 'gsdfg', 1, 1),
+(4, '1990-02-02', 'awgrw', 'garewq', 'gwer', 'tgerqwag', 'wer', 0, 0),
+(5, '1990-02-02', 'awgrw', 'garewq', 'gwer', 'tgerqwag', 'wer', 0, 0),
+(6, '1985-10-04', 'yeuj', 'dryujh', 'fdh', 'dfgjh', 'dfgh', 1, 1),
+(7, '1985-10-04', 'yeuj', 'dryujh', 'fdh', 'dfgjh', 'dfgh', 1, 1),
+(8, '1993-01-01', 'wsthsh', 'wrthrt', 'hwrethws', 'erhgyqwaer', 'tgqwaertgq', 0, 1),
+(9, '1990-02-02', 'awgrw', 'garewq', 'gwer', 'tgerqwag', 'wer', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -178,7 +187,15 @@ CREATE TABLE `dog_image` (
 --
 
 INSERT INTO `dog_image` (`id`, `dog_id`, `link`, `alt`, `main`) VALUES
-(1, 1, 'image.jpg', 'alt image text', 1);
+(1, 1, 'image.jpg', 'alt image text', 1),
+(2, 2, 'image.jpg', 'alt image text', 1),
+(3, 3, 'image.jpg', 'alt image text', 1),
+(4, 4, 'image.jpg', 'alt image text', 1),
+(5, 5, 'image.jpg', 'alt image text', 1),
+(6, 6, 'image.jpg', 'alt image text', 1),
+(7, 7, 'image.jpg', 'alt image text', 1),
+(8, 8, 'image.jpg', 'alt image text', 1),
+(9, 9, 'image.jpg', 'alt image text', 1);
 
 -- --------------------------------------------------------
 
@@ -198,7 +215,15 @@ CREATE TABLE `dog_name` (
 --
 
 INSERT INTO `dog_name` (`id`, `dog_id`, `dog_name`, `lang_id`) VALUES
-(1, 1, 'asdf', 1);
+(1, 1, 'asdf asdfasdfsad', 1),
+(2, 2, 'vzsd rqwrefwaef', 1),
+(3, 3, 'wqefwqaefasd qqq', 1),
+(4, 4, 'whywt ersfdg sad fg', 1),
+(5, 5, 'whywtersfdgsadfg', 1),
+(6, 6, 'wergsdfgsd', 1),
+(7, 7, 'wergsdfgsd', 1),
+(8, 8, 'asertgqaefrgser', 1),
+(9, 9, 'whywtersfdgsadfg', 1);
 
 -- --------------------------------------------------------
 
@@ -218,9 +243,33 @@ CREATE TABLE `dog_result` (
 --
 
 INSERT INTO `dog_result` (`id`, `dog_id`, `result_text`, `lang_id`) VALUES
-(1, 1, 'wrety', 1),
-(2, 1, 'sfgj', 1),
-(3, 1, 'yte', 1);
+(1, 1, 'ytegsdfh hsdrtghse', 1),
+(2, 1, 'ytegsdfh hsdrtghse', 1),
+(3, 1, 'ytegsdfh hsdrtghse', 1),
+(4, 2, 'gvsaergtwe', 1),
+(5, 2, 'sgdfgew', 1),
+(6, 2, 'gvfdfdsa', 1),
+(7, 3, 'gsdfg', 1),
+(8, 3, 'gsdfg', 1),
+(9, 3, 'gsdfg', 1),
+(10, 4, 'tgwqertg', 1),
+(11, 4, 'tgwqertg', 1),
+(12, 4, 'tgwqertg', 1),
+(13, 5, 'tgwer', 1),
+(14, 5, 'gtwer', 1),
+(15, 5, 'tgwqertg', 1),
+(16, 6, 'dfgjh', 1),
+(17, 6, 'dfgjd', 1),
+(18, 6, 'fgjdfgh', 1),
+(19, 7, 'dfgjh', 1),
+(20, 7, 'dfgjd', 1),
+(21, 7, 'fgjdfgh', 1),
+(22, 8, 'wretqawert', 1),
+(23, 8, 'qawretq', 1),
+(24, 8, 'rwetqwaert', 1),
+(25, 9, 'asdfasdfs', 1),
+(26, 9, 'asdfasdfs', 1),
+(27, 9, 'asdfasdfs', 1);
 
 -- --------------------------------------------------------
 
@@ -574,7 +623,7 @@ ALTER TABLE `block_title`
 -- AUTO_INCREMENT for table `dog`
 --
 ALTER TABLE `dog`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `dog_gender`
@@ -586,19 +635,19 @@ ALTER TABLE `dog_gender`
 -- AUTO_INCREMENT for table `dog_image`
 --
 ALTER TABLE `dog_image`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `dog_name`
 --
 ALTER TABLE `dog_name`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `dog_result`
 --
 ALTER TABLE `dog_result`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `lang`
