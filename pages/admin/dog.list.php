@@ -4,6 +4,25 @@
 
 if (isset($_POST["dog"]) && $_POST["dog"] === "add") {
 
+  var_dump($_FILES);
+
+  if (isset($_FILES["image-input"])) {
+    require PARTS_DIR . "img.conv.php";
+
+    $link = "image.jpg";
+    $img_upload_error = "";
+    
+    $img_convert_message = image_convert();
+
+    var_dump($img_convert_message);
+    
+    if (is_numeric($img_convert_message)) {
+      $link = $img_convert_message;
+    } else {
+      $img_upload_error = $img_convert_message;
+    }
+  }
+
   $dog_name    = isset($_POST["dog_name"]) ? $_POST["dog_name"] : "";
   $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
   $puppy       = isset($_POST["puppy"]) && $_POST["puppy"] === "on" ? 1 : 0;
@@ -15,7 +34,6 @@ if (isset($_POST["dog"]) && $_POST["dog"] === "add") {
   $under       = isset($_POST["under"]) ? $_POST["under"] : "";
   $results     = isset($_POST["results"]) ? $_POST["results"] : "";
 
-  $link = "image.jpg";
   $alt = "alt image text";
   $main = "1";
 
@@ -59,7 +77,6 @@ if (isset($_POST["dog"]) && $_POST["dog"] === "edit") {
   $after       = isset($_POST["after"]) ? $_POST["after"] : "";
   $under       = isset($_POST["under"]) ? $_POST["under"] : "";
   $results     = isset($_POST["results"]) ? $_POST["results"] : "";
-  var_dump($results);
 
   $link = "image.jpg";
   $alt = "alt image text";
@@ -146,7 +163,7 @@ foreach ($dogs as $dog) {
   $puppy_icon = $dog["puppy"] ? "yes!" : "";
   echo "<tr>";
   echo "<th scope=\"row\">" . $dog["id"] . "</th>";
-  echo "<td><a href=\"" . $dog["link"] . "\" alt=\"" . $dog["alt"] . "\" /></td>";
+  echo "<td><img src=\"" . SITE . "public/img/dogs/thumbs/" . $dog["link"] . ".jpg\" alt=\"" . $dog["alt"] . "\" /></td>";
   echo "<td>" . $dog["dog_name"] . "</td>";
   echo "<td>" . $dog["birth"] . "</td>";
   echo "<td>" . $puppy_icon . "</td>";

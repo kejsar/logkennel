@@ -14,11 +14,6 @@ define("CONTENT_DIR", ROOT_DIR . "pages"  . DS . "content" . DS);
 define("PARTS_DIR",   ROOT_DIR . "pages"  . DS . "parts"   . DS);
 define("DB_DIR",      ROOT_DIR . "db"     . DS);
 
-if (isset($_POST["img-upload"])) {
-  require PARTS_DIR . "img.conv.php";
-  exit();
-}
-
 require DB_DIR . "init_db.php";
 require DB_DIR . "read.php";
 

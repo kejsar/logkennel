@@ -52,26 +52,20 @@ function img_resize($target, $img_dir, $dest_img_x, $dest_img_y, $file_ext)
 
 function image_convert()
 {
-  echo "<br>FILES: ";
+  $message = "";
+
   var_dump($_FILES);
-  echo "<br>POST: ";
-  var_dump($_POST);
-
-  if (!isset($_POST["img-upload"])) {
-    exit();
-  }
-
-  if (!isset($_FILES["imageinput"])) {
-    exit("Sorry, file is missing.");
+  
+  if (!isset($_FILES["image-input"])) {
+    return "Sorry, file is missing.";
   }
 
   $new_img_name = date_timestamp_get(date_create());
-  $message = "";
 
-  $file_name = $_FILES["imageinput"]["name"];
-  $file_size = $_FILES["imageinput"]["size"];
-  $file_tmp  = $_FILES["imageinput"]["tmp_name"];
-// $file_type = $_FILES["imageinput"]["type"];
+  $file_name = $_FILES["image-input"]["name"];
+  $file_size = $_FILES["image-input"]["size"];
+  $file_tmp  = $_FILES["image-input"]["tmp_name"];
+// $file_type = $_FILES["image-input"]["type"];
 
   $file_ext_name = explode(".", $file_name);
   $raw_file_ext  = end($file_ext_name);
@@ -110,11 +104,8 @@ function image_convert()
     $thumb_h = $thmb_dim[1];
     img_resize($tmp_dir, $thumb_dir, $thumb_w, $thumb_h, $file_ext);
 
-    $message = "File uploaded successfully!";
     unlink($tmp_dir);
   }
 
-  return $message;
+  return $message !== "" ? $message : $new_img_name;
 }
-
-echo image_convert();

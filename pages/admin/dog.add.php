@@ -7,31 +7,26 @@
         <h1>Добавить новую собачку</h1>
 
         <div class="row justify-content-center">
-          <form class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6" action="<?php echo SITE; ?>admin/dog" method="post">
+          <form class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6" action="<?php echo SITE; ?>admin/dog" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="dog" value="add">
 
-            <!-- <div class="form-group row">
+            <div class="card" style="width: 18rem;">
+              <img src="#" alt="..." class="card-img-top" id="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on teh card</p>
+              </div>
+            </div>
+
+            <div class="form-group row">
               <div class="col">
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="imageinputaddon">Upload</span>
-                  </div>
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="image-input" id="imageinput" aria-describedby="imageinputaddon">
+                    <input type="file" class="custom-file-input" name="image-input" id="imageinput">
                     <label for="imageinput" class="custom-file-label">Choose file</label>
                   </div>
                 </div>
-              </div>
-            </div> -->
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-              </div>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
               </div>
             </div>
 

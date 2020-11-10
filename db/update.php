@@ -107,7 +107,6 @@ function update_dog_image($conn, $dog_id, $link, $alt, $main)
 
 function update_dog_result($conn, $dog_id, $result_text, $lang_id)
 {
-  var_dump($dog_id, $result_text, $lang_id);
   $sql = "UPDATE `dog_result` SET
               `result_text` = :result_text
             WHERE `dog_id` = :dog_id
