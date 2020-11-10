@@ -7,10 +7,13 @@
 function get_block($conn, $block_name, $lang_id) {
   $sql = "SELECT
               `block_title`.`block_title`,
-              `block_text`.`block_text`
+              `block_text`.`block_text`,
+              `block_image`.`block_image_link`,
+              `block_image`.`block_image_alt_text`
             FROM `block` 
             INNER JOIN `block_title` ON `block`.`id` = `block_title`.`block_id`
             INNER JOIN `block_text` ON `block`.`id` = `block_text`.`block_id`
+            INNER JOIN `block_image` ON `block`.`id` = `block_image`.`block_id`
             WHERE `block`.`block_name` = :block_name
               AND `block_title`.`lang_id` = :lang_id
               AND `block_text`.`lang_id` = :lang_id";
