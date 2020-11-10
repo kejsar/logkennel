@@ -58,22 +58,22 @@ function add_new_block($conn, $name, $title, $text, $lang)
 // ADD DOG
 // ============================================================================
 
-function add_dog($conn, $birth, $teeth, $patella, $owner, $after, $under, $gender_type, $puppy)
+function add_dog($conn, $dog_birth, $dog_info, $dog_owned, $dog_host, $dog_father, $dog_mother, $gender_type, $for_sale)
 {
-  $sql = "INSERT INTO `dog` 
-              (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`, `gender_type`, `puppy`) 
+  $sql = "INSERT INTO `dog`
+              (`id`, `dog_birth`, `dog_info`, `dog_owned`, `dog_host`, `dog_father`, `dog_mother`, `gender_type`, `for_sale`) 
             VALUES 
-              (NULL, :birth, :teeth, :patella, :owner, :after, :under, :gender_type, :puppy)";
+              (NULL, :dog_birth, :dog_info, :dog_owned, :dog_host, :dog_father, :dog_mother, :gender_type, :for_sale)";
   $sth = $conn->prepare($sql);
   $result = $sth->execute(array(
-    ":birth"       => $birth,
-    ":teeth"       => $teeth,
-    ":patella"     => $patella,
-    ":owner"       => $owner,
-    ":after"       => $after,
-    ":under"       => $under,
+    ":dog_birth" => $dog_birth,
+    ":dog_info" => $dog_info,
+    ":dog_owned" => $dog_owned,
+    ":dog_host" => $dog_host,
+    ":dog_father" => $dog_father,
+    ":dog_mother" => $dog_mother,
     ":gender_type" => $gender_type,
-    ":puppy"       => $puppy
+    ":for_sale" => $for_sale
   ));
   return $result ? $conn->lastInsertId() : false;
 }
@@ -93,18 +93,18 @@ function add_dog_name($conn, $dog_id, $dog_name, $lang_id)
   return $result ? $conn->lastInsertId() : false;
 }
 
-function add_dog_image($conn, $dog_id, $link, $alt, $main)
+function add_dog_image($conn, $dog_id, $dog_image_link, $dog_image_alt_text, $main)
 {
   $sql = "INSERT INTO `dog_image` 
-              (`id`, `dog_id`, `link`, `alt`, `main`) 
+              (`id`, `dog_id`, `dog_image_link`, `dog_image_alt_text`, `main`) 
             VALUES 
-              (NULL, :dog_id, :link, :alt, :main)";
+              (NULL, :dog_id, :dog_image_link, :dog_image_alt_text, :main)";
   $sth = $conn->prepare($sql);
   $result = $sth->execute(array(
     ":dog_id" => $dog_id,
-    ":link"   => $link,
-    ":alt"    => $alt,
-    ":main"   => $main
+    ":dog_image_link" => $dog_image_link,
+    ":dog_image_alt_text" => $dog_image_alt_text,
+    ":main" => $main
   ));
   return $result ? $conn->lastInsertId() : false;
 }
@@ -128,33 +128,33 @@ function add_dog_result($conn, $dog_id, $result_text, $lang_id)
 // ADD NEWS
 // ============================================================================
 
-function add_news($conn, $year, $month, $day)
+function add_news($conn, $news_year, $news_month, $news_day)
 {
   $sql = "INSERT INTO `news` 
-              (`id`, `year`, `month`, `day`) 
+              (`id`, `news_year`, `news_month`, `news_day`) 
             VALUES 
-              (NULL, :year, :month, :day)";
+              (NULL, :news_year, :news_month, :news_day)";
   $sth = $conn->prepare($sql);
   $result = $sth->execute(array(
-    ":year"  => $year,
-    ":month" => $month,
-    ":day"   => $day
+    ":news_year"  => $news_year,
+    ":news_month" => $news_month,
+    ":news_day"   => $news_day
   ));
   return $result ? $conn->lastInsertId() : false;
 }
 
-function add_news_image($conn, $news_id, $link, $alt, $main)
+function add_news_image($conn, $news_id, $news_image_link, $news_image_alt, $main)
 {
   $sql = "INSERT INTO `news_image` 
-              (`id`, `news_id`, `link`, `alt`, `main`) 
+              (`id`, `news_id`, `news_image_link`, `news_image_alt`, `main`) 
             VALUES 
-              (NULL, :news_id, :link, :alt, :main)";
+              (NULL, :news_id, :news_image_link, :news_image_alt, :main)";
   $sth = $conn->prepare($sql);
   $result = $sth->execute(array(
     ":news_id" => $news_id,
-    ":link"    => $link,
-    ":alt"     => $alt,
-    ":main"    => $main
+    ":news_image_link" => $news_image_link,
+    ":news_image_alt" => $news_image_alt,
+    ":main" => $main
   ));
   return $result ? $conn->lastInsertId() : false;
 }

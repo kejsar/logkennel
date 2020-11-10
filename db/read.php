@@ -57,16 +57,16 @@ function get_block_text($conn, $block_id, $lang_id) {
 function get_dogs($conn, $search_type, $lang_id) {
   $sql = "SELECT 
               `dog`.`id`,
-              `dog`.`birth`,
-              `dog`.`teeth`,
-              `dog`.`patella`,
-              `dog`.`owner`,
-              `dog`.`after`,
-              `dog`.`under`,
-              `dog`.`puppy`,
-              `dog_gender`.`gender`,
-              `dog_image`.`link`,
-              `dog_image`.`alt`,
+              `dog`.`dog_birth`,
+              `dog`.`dog_info`,
+              `dog`.`dog_owned`,
+              `dog`.`dog_host`,
+              `dog`.`dog_father`,
+              `dog`.`dog_mother`,
+              `dog`.`for_sale`,
+              `dog_gender`.`gender_name`,
+              `dog_image`.`dog_image_link`,
+              `dog_image`.`dog_image_alt_text`,
               `dog_name`.`dog_name`
             FROM `dog`
             INNER JOIN `dog_gender` ON `dog`.`gender_type` = `dog_gender`.`gender_type`
@@ -75,12 +75,13 @@ function get_dogs($conn, $search_type, $lang_id) {
 
             WHERE ";
 
-  if ($search_type === "males")   $sql .= " `dog`.`gender_type` = '1' AND ";
-  if ($search_type === "females") $sql .= " `dog`.`gender_type` = '0' AND ";
-  if ($search_type === "puppies") $sql .= " `dog`.`puppy` = '1' AND ";
+  if ($search_type === "males")    $sql .= " `dog`.`gender_type` = '1' AND ";
+  if ($search_type === "females")  $sql .= " `dog`.`gender_type` = '0' AND ";
+  if ($search_type === "for_sale") $sql .= " `dog`.`for_sale` = '1' AND ";
 
-  $sql .= "        `dog_gender`.`lang_id` = :lang_id
-              AND  `dog_name`.`lang_id` = :lang_id
+  $sql .= "       `dog_gender`.`lang_id` = :lang_id
+              AND `dog_name`.`lang_id` = :lang_id
+              AND `dog_image`.`main` = '1'
 
             ORDER BY `dog`.`id` ASC";
   $sth = $conn->prepare($sql);
@@ -93,25 +94,24 @@ function get_dogs($conn, $search_type, $lang_id) {
 function get_dog($conn, $dog_id, $lang_id) {
   $sql = "SELECT 
               `dog`.`id`,
-              `dog`.`birth`,
+              `dog`.`dog_birth`,
+              `dog`.`dog_info`,
+              `dog`.`dog_owned`,
+              `dog`.`dog_host`,
+              `dog`.`dog_father`,
+              `dog`.`dog_mother`,
+              `dog`.`for_sale`,
               `dog`.`gender_type`,
-              `dog`.`teeth`,
-              `dog`.`patella`,
-              `dog`.`owner`,
-              `dog`.`after`,
-              `dog`.`under`,
-              `dog`.`puppy`,
-              `dog_image`.`link`,
-              `dog_image`.`alt`,
+              `dog_image`.`dog_image_link`,
+              `dog_image`.`dog_image_alt_text`,
               `dog_name`.`dog_name`
             FROM `dog`
-            INNER JOIN `dog_image`  ON `dog`.`id` = `dog_image`.`dog_id`
-            INNER JOIN `dog_name`   ON `dog`.`id` = `dog_name`.`dog_id`
+              INNER JOIN `dog_image`  ON `dog`.`id` = `dog_image`.`dog_id`
+              INNER JOIN `dog_name`   ON `dog`.`id` = `dog_name`.`dog_id`
 
             WHERE `dog`.`id` = :dog_id
               AND `dog_name`.`lang_id` = :lang_id
-
-            ORDER BY `dog`.`id` ASC";
+              AND `dog_image`.`main` = '1'";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
     ":dog_id" => $dog_id,
@@ -122,7 +122,7 @@ function get_dog($conn, $dog_id, $lang_id) {
 }
 
 function get_gender_name($conn, $gender_type, $lang_id) {
-  $sql = "SELECT `gender`
+  $sql = "SELECT `gender_name`
             FROM `dog_gender`
             WHERE `gender_type` = :gender_type
               AND `lang_id` = :lang_id";
@@ -132,25 +132,16 @@ function get_gender_name($conn, $gender_type, $lang_id) {
     ":lang_id" => $lang_id
   ));
   $result = $sth->fetch();
-  return $result["gender"];
-}
-
-function get_dog_image_main($conn, $dog_id) {
-  $sql = "SELECT *
-            FROM `dog_image`
-            WHERE `dog_id` = :dog_id
-              AND `main` = 1";
-  $sth = $conn->prepare($sql);
-  $sth->execute(array(
-    ":dog_id" => $dog_id
-  ));
-  return $sth->fetch();
+  return $result["gender_name"];
 }
 
 function get_dog_images($conn, $dog_id) {
-  $sql = "SELECT *
+  $sql = "SELECT 
+              `dog_image_link`,
+              `dog_image_alt_text`
             FROM `dog_image`
-            WHERE `dog_id` = :dog_id";
+            WHERE `dog_id` = :dog_id
+              AND `main` = '0'";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
     ":dog_id" => $dog_id
@@ -168,7 +159,8 @@ function get_dog_results($conn, $dog_id, $lang_id) {
     ":dog_id" => $dog_id,
     ":lang_id" => $lang_id
   ));
-  return $sth->fetchAll(PDO::FETCH_COLUMN, 0);
+  $result = $sth->fetch();
+  return $result["result_text"];
 }
 
 // ============================================================================
@@ -176,7 +168,9 @@ function get_dog_results($conn, $dog_id, $lang_id) {
 // ============================================================================
 
 function get_lang_by_id($conn, $lang_id) {
-  $sql = "SELECT * 
+  $sql = "SELECT 
+              `lang_code`,
+              `lang_name`
             FROM `lang` 
             WHERE `id` = :lang_id";
   $sth = $conn->prepare($sql);
@@ -186,15 +180,16 @@ function get_lang_by_id($conn, $lang_id) {
   return $sth->fetchAll();
 }
 
-function get_lang_by_link($conn, $link) {
-  $sql = "SELECT * 
+function get_lang_name($conn, $lang_code) {
+  $sql = "SELECT `lang_name`
             FROM `lang` 
-            WHERE `link` = :link";
+            WHERE `lang_code` = :lang_code";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
-    ":link" => $link
+    ":lang_code" => $lang_code
   ));
-  return $sth->fetchAll();
+  $result = $sth->fetch();
+  return $result["lang_name"];
 }
 
 // ============================================================================
@@ -202,22 +197,22 @@ function get_lang_by_link($conn, $link) {
 // ============================================================================
 
 function get_menu_links($conn) {
-  $sql = "SELECT `link` 
+  $sql = "SELECT `menu_link` 
             FROM `menu`";
   $sth = $conn->prepare($sql);
   $sth->execute();
   return $sth->fetchAll(PDO::FETCH_COLUMN, 0);
 }
 
-function get_menu($conn, $lang) {
-  $sql = "SELECT `menu`.`link`, `menu_title`.`menu_title`
+function get_menu($conn, $lang_id) {
+  $sql = "SELECT `menu`.`menu_link`, `menu_title`.`menu_title`
             FROM `menu`
             INNER JOIN `menu_title` ON `menu`.`id` = `menu_title`.`menu_id`
-            WHERE `menu_title`.`lang_id` = :lang
+            WHERE `menu_title`.`lang_id` = :lang_id
             ORDER BY `menu`.`id` ASC";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
-    ":lang" => $lang
+    ":lang_id" => $lang_id
   ));
   return $sth->fetchAll();
 }
@@ -227,7 +222,7 @@ function get_menu($conn, $lang) {
 // ============================================================================
 
 function get_admin_menu_links($conn) {
-  $sql = "SELECT `link` 
+  $sql = "SELECT `admin_menu_link` 
             FROM `admin_menu`";
   $sth = $conn->prepare($sql);
   $sth->execute();
@@ -235,9 +230,9 @@ function get_admin_menu_links($conn) {
 }
 
 function get_admin_menu($conn, $lang_id) {
-  $sql = "SELECT `admin_menu`.`link`, `admin_menu_title`.`menu_title`
+  $sql = "SELECT `admin_menu`.`admin_menu_link`, `admin_menu_title`.`admin_menu_title`
             FROM `admin_menu`
-            INNER JOIN `admin_menu_title` ON `admin_menu`.`id` = `admin_menu_title`.`menu_id`
+            INNER JOIN `admin_menu_title` ON `admin_menu`.`id` = `admin_menu_title`.`admin_menu_id`
             WHERE `admin_menu_title`.`lang_id` = :lang_id
             ORDER BY `admin_menu`.`id` ASC";
   $sth = $conn->prepare($sql);
@@ -254,11 +249,11 @@ function get_admin_menu($conn, $lang_id) {
 function get_news_item_by_id($conn, $news_id, $lang_id) {
   $sql = "SELECT 
               `news`.`id`, 
-              `news`.`year`, 
-              `news`.`month`,
-              `news`.`day`,
-              `news_image`.`link`,
-              `news_image`.`alt`,
+              `news`.`news_year`, 
+              `news`.`news_month`,
+              `news`.`news_day`,
+              `news_image`.`news_image_link`,
+              `news_image`.`news_image_alt`,
               `news_link`.`news_link`,
               `news_text`.`news_text`,
               `news_title`.`news_title`

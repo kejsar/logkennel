@@ -48,30 +48,30 @@ function update_block_text($conn, $block_text, $block_id, $lang_id)
 // UPDATE DOG
 // ============================================================================
 
-function update_dog($conn, $birth, $puppy, $teeth, $patella, $owner, $after, $under, $gender_type, $dog_id)
+function update_dog($conn, $dog_birth, $for_sale, $dog_info, $dog_owned, $dog_host, $dog_father, $dog_mother, $gender_type, $dog_id)
 {
   $sql = "UPDATE `dog` SET 
-              `birth`     = :birth,
-              `puppy`     = :puppy,
-              `teeth`     = :teeth,
-              `patella`   = :patella,
-              `owner`     = :owner,
-              `after`     = :after,
-              `under`     = :under,
+              `dog_birth` = :dog_birth,
+              `for_sale` = :for_sale,
+              `dog_info` = :dog_info,
+              `dog_owned` = :dog_owned,
+              `dog_host` = :dog_host,
+              `dog_father` = :dog_father,
+              `dog_mother` = :dog_mother,
               `gender_type` = :gender_type
             WHERE `id` = :dog_id";
   $sth = $conn->prepare($sql);
   // var_dump($sth->debugDumpParams());
   return $sth->execute(array(
-    ":birth"     => $birth,
-    ":puppy"     => $puppy,
-    ":teeth"     => $teeth,
-    ":patella"   => $patella,
-    ":owner"     => $owner,
-    ":after"     => $after,
-    ":under"     => $under,
+    ":dog_birth" => $dog_birth,
+    ":for_sale" => $for_sale,
+    ":dog_info" => $dog_info,
+    ":dog_owned" => $dog_owned,
+    ":dog_host" => $dog_host,
+    ":dog_father" => $dog_father,
+    ":dog_mother" => $dog_mother,
     ":gender_type" => $gender_type,
-    ":dog_id"    => $dog_id
+    ":dog_id" => $dog_id
   ));
 }
 
@@ -89,17 +89,17 @@ function update_dog_name($conn, $dog_id, $dog_name, $lang_id)
   ));
 }
 
-function update_dog_image($conn, $dog_id, $link, $alt, $main)
+function update_dog_image($conn, $dog_id, $dog_image_link, $dog_image_alt_text, $main)
 {
   $sql = "UPDATE `dog_image` SET
-              `link` = :link,
-              `alt` = :alt,
+              `dog_image_link` = :dog_image_link,
+              `dog_image_alt_text` = :dog_image_alt_text,
               `main` = :main
             WHERE `dog_id` = :dog_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
-    ":link" => $link,
-    ":alt" => $alt,
+    ":dog_image_link" => $dog_image_link,
+    ":dog_image_alt_text" => $dog_image_alt_text,
     ":main" => $main,
     ":dog_id" => $dog_id
   ));
@@ -123,16 +123,16 @@ function update_dog_result($conn, $dog_id, $result_text, $lang_id)
 // UPDATE MENU
 // ============================================================================
 
-function update_menu($conn, $menu_id, $link, $image)
+function update_menu($conn, $menu_id, $menu_link, $menu_image)
 {
   $sql = "UPDATE `menu` SET
-              `link` = :link,
-              `image` = :image
+              `menu_link` = :menu_link,
+              `menu_image` = :menu_image
             WHERE `id` = :menu_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
-    ":link" => $link,
-    ":image" => $image,
+    ":menu_link" => $menu_link,
+    ":menu_image" => $menu_image,
     ":menu_id" => $menu_id
   ));
 }
@@ -169,33 +169,33 @@ function update_menu_subtitle($conn, $menu_id, $menu_subtitle, $lang_id)
 // UPDATE NEWS
 // ============================================================================
 
-function update_news($conn, $news_id, $year, $month, $day)
+function update_news($conn, $news_id, $news_year, $news_month, $news_day)
 {
   $sql = "UPDATE `news` SET
-              `year` = :year,
-              `month` = :month,
-              `day` = :day
+              `news_year` = :news_year,
+              `news_month` = :news_month,
+              `news_day` = :news_day
             WHERE `id` = :news_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
-    ":year" => $year,
-    ":month" => $month,
-    ":day" => $day,
+    ":news_year" => $news_year,
+    ":news_month" => $news_month,
+    ":news_day" => $news_day,
     ":news_id" => $news_id
   ));
 }
 
-function update_news_image($conn, $news_id, $link, $alt, $main)
+function update_news_image($conn, $news_id, $news_image_link, $news_image_alt_text, $main)
 {
   $sql = "UPDATE `news_image` SET
-              `link` = :link,
-              `alt` = :alt,
+              `news_image_link` = :news_image_link,
+              `news_image_alt_text` = :news_image_alt_text,
               `main` = :main
             WHERE `news_id` = :news_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
-    ":link" => $link,
-    ":alt" => $alt,
+    ":news_image_link" => $news_image_link,
+    ":news_image_alt_text" => $news_image_alt_text,
     ":main" => $main,
     ":news_id" => $news_id
   ));

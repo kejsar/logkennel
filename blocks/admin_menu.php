@@ -19,15 +19,15 @@
 $admin_menu = get_admin_menu($conn, LANG);
 
 foreach($admin_menu as $admin_menu_item) {
-  if ($admin_menu_item["link"] === "main") {
-    $admin_menu_item["link"] = "";
+  if ($admin_menu_item["admin_menu_link"] === "main") {
+    $admin_menu_item["admin_menu_link"] = "";
   }
   $active = "";
-  if ((PAGE === $admin_menu_item["link"]) || (PAGE === "admin" && $admin_menu_item["link"] === "")) {
+  if ((PAGE === $admin_menu_item["admin_menu_link"]) || (PAGE === "admin" && $admin_menu_item["admin_menu_link"] === "")) {
     $active = " active";
   }
   echo "<li class=\"nav-item\">";
-  echo "  <a class=\"nav-link" . $active . "\" href=\"" . SITE . "admin/" . $admin_menu_item["link"] . "\">" . $admin_menu_item["menu_title"] . "</a>";
+  echo "  <a class=\"nav-link" . $active . "\" href=\"" . SITE . "admin/" . $admin_menu_item["admin_menu_link"] . "\">" . $admin_menu_item["admin_menu_title"] . "</a>";
   echo "</li>";
 }
 

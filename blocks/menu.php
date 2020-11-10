@@ -19,9 +19,9 @@
 $menu = get_menu($conn, LANG);
 
 foreach($menu as $menu_item) {
-  $active = $page === $menu_item["link"] ? " active" : "";
+  $active = $page === $menu_item["menu_link"] ? " active" : "";
   echo "<li class=\"nav-item\">";
-  echo "  <a class=\"nav-link" . $active . "\" href=\"" . SITE . $menu_item["link"] . "\">" . $menu_item["menu_title"] . "</a>";
+  echo "  <a class=\"nav-link" . $active . "\" href=\"" . SITE . $menu_item["menu_link"] . "\">" . $menu_item["menu_title"] . "</a>";
   echo "</li>";
 }
 
