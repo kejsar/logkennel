@@ -1,8 +1,23 @@
+
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `lang`
+--
+
+INSERT INTO `lang` (`id`, `lang_code`, `lang_name`) VALUES
+(1, 'ru', 'русский'),
+(2, 'en', 'english'),
+(3, 'uk', 'український');
+
+-- --------------------------------------------------------
+
 --
 -- Dumping data for table `admin_menu`
 --
 
-INSERT INTO `admin_menu` (`id`, `link`) VALUES
+INSERT INTO `admin_menu` (`id`, `admin_menu_link`) VALUES
 (1, 'main'),
 (2, 'dogs'),
 (3, 'news'),
@@ -15,7 +30,7 @@ INSERT INTO `admin_menu` (`id`, `link`) VALUES
 -- Dumping data for table `admin_menu_title`
 --
 
-INSERT INTO `admin_menu_title` (`id`, `menu_id`, `menu_title`, `lang_id`) VALUES
+INSERT INTO `admin_menu_title` (`id`, `admin_menu_id`, `admin_menu_title`, `lang_id`) VALUES
 (1, 1, 'Главная', 1),
 (2, 1, 'Main', 2),
 (3, 2, 'Собачки', 1),
@@ -33,7 +48,7 @@ INSERT INTO `admin_menu_title` (`id`, `menu_id`, `menu_title`, `lang_id`) VALUES
 -- Dumping data for table `dog_gender`
 --
 
-INSERT INTO `dog_gender` (`id`, `gender`, `gender_type`, `lang_id`) VALUES
+INSERT INTO `dog_gender` (`id`, `gender_name`, `gender_type`, `lang_id`) VALUES
 (1, 'мужской', 1, 1),
 (2, 'женский', 0, 1),
 (3, 'male', 1, 2),
@@ -44,21 +59,10 @@ INSERT INTO `dog_gender` (`id`, `gender`, `gender_type`, `lang_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Dumping data for table `lang`
---
-
-INSERT INTO `lang` (`id`, `link`, `lang`) VALUES
-(1, 'ru', 'русский'),
-(2, 'en', 'english'),
-(3, 'uk', 'український');
-
--- --------------------------------------------------------
-
---
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`id`, `link`, `image`) VALUES
+INSERT INTO `menu` (`id`, `menu_link`, `menu_image`) VALUES
 (1, 'main', 'img-main.jpg'),
 (2, 'news', 'img-news.jpg'),
 (3, 'males', 'img-males.jpg'),
