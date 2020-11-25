@@ -26,6 +26,7 @@ foreach($menu as $menu_item) {
 }
 
 ?>
+              <li class="nav-item"><a class="nav-link" href="<?=SITE?>admin">Admin</a></li>
             </ul>
           </div>
 

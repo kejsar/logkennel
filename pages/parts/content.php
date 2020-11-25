@@ -5,10 +5,10 @@ $path = $page === "admin" ? ADMIN_DIR . "index" : CONTENT_DIR . $page;
 
 require BLOCKS_DIR . "header.php";
 
-require BLOCKS_DIR . "menu.php";
+require BLOCKS_DIR . "menu.main.php";
 
 if ($page === "admin" && AUTH) {
-  require BLOCKS_DIR . "admin_menu.php";
+  require BLOCKS_DIR . "menu.admin.php";
 }
 
 require $path . ".php";

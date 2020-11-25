@@ -15,20 +15,20 @@
           <div class="collapse navbar-collapse" id="dogs-navbar-content">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "all") echo " active"; ?>" href="<?php echo SITE; ?>admin/dog/all">All</a>
+                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "all") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/all">All</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "males") echo " active"; ?>" href="<?php echo SITE; ?>admin/dog/males">Males</a>
+                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "males") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/males">Males</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "females") echo " active"; ?>" href="<?php echo SITE; ?>admin/dog/females">Females</a>
+                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "females") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/females">Females</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "puppies") echo " active"; ?>" href="<?php echo SITE; ?>admin/dog/puppies">Puppies</a>
+                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "for-sale") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/for-sale">For Sale</a>
               </li>
             </ul>
             <div class="my-2 my-lg-0">
-              <a class="btn btn-outline-success" href="<?php echo SITE; ?>admin/dog/add" role="button">Добавить</a>
+              <a class="btn btn-outline-success" href="<?php echo SITE; ?>admin/dogs/add" role="button">Добавить</a>
             </div>
           </div>
 

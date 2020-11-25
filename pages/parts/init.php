@@ -40,6 +40,9 @@ function set_path($conn)
 
     define("PAGE", "main");
 
+  } elseif (count($path) === 1 && $path[0] === "admin") {
+    header("Location: " . SITE . "admin/dogs");
+    die();
   } elseif ((count($path) < 5) && (page_exists($conn, $path[0]) || $path[0] === "admin")) {
 
     if (count($path) === 1) {
@@ -62,6 +65,12 @@ function set_path($conn)
         }
       }
 
+    }
+
+    if ($path[0] === "admin") {
+      define("IS_ADMIN", true);
+    } else {
+      define("IS_ADMIN", false);
     }
 
   } else {

@@ -4,8 +4,8 @@ function get_connection()
 {
   $host      = "localhost";
   $db_name   = "logkennel";
-  $user_name = "logkennel";
-  $password  = "123456";
+  $user_name = "root";
+  $password  = "root";
   $charset   = "utf8";
   
   $dsn = "mysql:host=" . $host    . "; "
