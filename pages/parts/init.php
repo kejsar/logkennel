@@ -36,6 +36,12 @@ function set_path($conn)
 {
   $path = get_path();
 
+  if (isset($path[0]) && $path[0] === "admin") {
+    define("IS_ADMIN", true);
+  } else {
+    define("IS_ADMIN", false);
+  }
+
   if (count($path) === 0) {
 
     define("PAGE", "main");
@@ -65,12 +71,6 @@ function set_path($conn)
         }
       }
 
-    }
-
-    if ($path[0] === "admin") {
-      define("IS_ADMIN", true);
-    } else {
-      define("IS_ADMIN", false);
     }
 
   } else {

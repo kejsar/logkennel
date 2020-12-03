@@ -7,7 +7,7 @@ if (isset($_POST["logout"]) && $_POST["logout"] === "true") {
 } elseif (isset($_COOKIE["login"]) && $_COOKIE["login"] === "admin") {
   define("AUTH", true);
 } elseif (   (isset($_POST["login"]) && isset($_POST["password"]))
-          && ($_POST["login"] === "admin" && $_POST["password"] === "123456")
+          && ($_POST["login"] === "admin" && $_POST["password"] === "admin")
 ) {
   $cookie_name = "login";
   $cookie_value = "admin";
