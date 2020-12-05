@@ -53,8 +53,6 @@ function img_resize($target, $img_dir, $dest_img_x, $dest_img_y, $file_ext)
 function image_convert()
 {
   $message = "";
-
-  var_dump($_FILES);
   
   if (!isset($_FILES["image-input"])) {
     return "Sorry, file is missing.";

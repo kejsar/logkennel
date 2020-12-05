@@ -35,15 +35,6 @@ function delete_dog_image($conn, $image_id) {
   ));
 }
 
-function delete_dog_result($conn, $result_id) {
-  $sql = "DELETE FROM `dog_result` 
-            WHERE `id` = :result_id";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":result_id" => $result_id
-  ));
-}
-
 // ============================================================================
 // DELETE NEWS
 // ============================================================================

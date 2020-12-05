@@ -25,6 +25,17 @@ function get_block($conn, $block_name, $lang_id) {
   return $sth->fetch();
 }
 
+function get_block_image($conn, $block_id) {
+  $sql = "SELECT `block_image_link`, `block_image_alt_text`
+            FROM `block_image` 
+            WHERE `block_id` = :block_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":block_id" => $block_id
+  ));
+  return $sth->fetch();
+}
+
 function get_block_title($conn, $block_id, $lang_id) {
   $sql = "SELECT `block_title` 
             FROM `block_title` 
@@ -61,12 +72,8 @@ function get_dogs($conn, $search_type, $lang_id) {
   $sql = "SELECT 
               `dog`.`id`,
               `dog`.`dog_birth`,
-              `dog`.`dog_info`,
-              `dog`.`dog_owned`,
-              `dog`.`dog_host`,
-              `dog`.`dog_father`,
-              `dog`.`dog_mother`,
               `dog`.`for_sale`,
+              `dog`.`dog_info`,
               `dog_gender`.`gender_name`,
               `dog_image`.`dog_image_link`,
               `dog_image`.`dog_image_alt_text`,
@@ -98,12 +105,8 @@ function get_dog($conn, $dog_id, $lang_id) {
   $sql = "SELECT 
               `dog`.`id`,
               `dog`.`dog_birth`,
-              `dog`.`dog_info`,
-              `dog`.`dog_owned`,
-              `dog`.`dog_host`,
-              `dog`.`dog_father`,
-              `dog`.`dog_mother`,
               `dog`.`for_sale`,
+              `dog`.`dog_info`,
               `dog`.`gender_type`,
               `dog_image`.`dog_image_link`,
               `dog_image`.`dog_image_alt_text`,
@@ -150,20 +153,6 @@ function get_dog_images($conn, $dog_id) {
     ":dog_id" => $dog_id
   ));
   return $sth->fetchAll();
-}
-
-function get_dog_results($conn, $dog_id, $lang_id) {
-  $sql = "SELECT `result_text`
-            FROM `dog_result`
-            WHERE `dog_id` = :dog_id
-              AND `lang_id` = :lang_id";
-  $sth = $conn->prepare($sql);
-  $sth->execute(array(
-    ":dog_id" => $dog_id,
-    ":lang_id" => $lang_id
-  ));
-  $result = $sth->fetch();
-  return $result["result_text"];
 }
 
 // ============================================================================
@@ -248,6 +237,32 @@ function get_admin_menu($conn, $lang_id) {
 // ============================================================================
 // READ NEWS
 // ============================================================================
+
+function get_news_items($conn, $lang_id) {
+  $sql = "SELECT 
+              `news`.`id`, 
+              `news`.`news_year`, 
+              `news`.`news_month`,
+              `news`.`news_day`,
+              `news_image`.`news_image_link`,
+              `news_image`.`news_image_alt`,
+              `news_link`.`news_link`,
+              `news_text`.`news_text`,
+              `news_title`.`news_title`
+            FROM `news`
+            INNER JOIN `news_image` ON `news`.`id` = `news_image`.`news_id`
+            INNER JOIN `news_link` ON `menu`.`id` = `news_link`.`news_id`
+            INNER JOIN `news_text` ON `menu`.`id` = `news_text`.`news_id`
+            INNER JOIN `news_title` ON `menu`.`id` = `news_title`.`news_id`
+            WHERE `news_link`.`lang_id` = :lang_id
+              AND `news_text`.`lang_id` = :lang_id
+              AND `news_title`.`lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":lang_id" => $lang_id
+  ));
+  return $sth->fetchAll();
+}
 
 function get_news_item_by_id($conn, $news_id, $lang_id) {
   $sql = "SELECT 

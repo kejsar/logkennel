@@ -7,7 +7,11 @@ if (AUTH) {
   require DB_DIR . "delete.php";
   
   if (defined("SECTION")) {
-    require ADMIN_DIR . PAGE . ".php";
+    if (defined("SUBPAGE")) {
+      require ADMIN_DIR . PAGE . "." . SUBPAGE . ".php";
+    } else {
+      require ADMIN_DIR . PAGE . ".php";
+    }
   }
   
 } else {

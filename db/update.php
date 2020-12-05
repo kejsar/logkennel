@@ -52,24 +52,15 @@ function update_dog($conn, $dog_birth, $for_sale, $dog_info, $dog_owned, $dog_ho
 {
   $sql = "UPDATE `dog` SET 
               `dog_birth` = :dog_birth,
-              `for_sale` = :for_sale,
               `dog_info` = :dog_info,
-              `dog_owned` = :dog_owned,
-              `dog_host` = :dog_host,
-              `dog_father` = :dog_father,
-              `dog_mother` = :dog_mother,
+              `for_sale` = :for_sale,
               `gender_type` = :gender_type
             WHERE `id` = :dog_id";
   $sth = $conn->prepare($sql);
-  // var_dump($sth->debugDumpParams());
   return $sth->execute(array(
     ":dog_birth" => $dog_birth,
-    ":for_sale" => $for_sale,
     ":dog_info" => $dog_info,
-    ":dog_owned" => $dog_owned,
-    ":dog_host" => $dog_host,
-    ":dog_father" => $dog_father,
-    ":dog_mother" => $dog_mother,
+    ":for_sale" => $for_sale,
     ":gender_type" => $gender_type,
     ":dog_id" => $dog_id
   ));
@@ -102,66 +93,6 @@ function update_dog_image($conn, $dog_id, $dog_image_link, $dog_image_alt_text, 
     ":dog_image_alt_text" => $dog_image_alt_text,
     ":main" => $main,
     ":dog_id" => $dog_id
-  ));
-}
-
-function update_dog_result($conn, $dog_id, $result_text, $lang_id)
-{
-  $sql = "UPDATE `dog_result` SET
-              `result_text` = :result_text
-            WHERE `dog_id` = :dog_id
-              AND  `lang_id` = :lang_id";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":result_text" => $result_text,
-    ":lang_id" => $lang_id,
-    ":dog_id" => $dog_id
-  ));
-}
-
-// ============================================================================
-// UPDATE MENU
-// ============================================================================
-
-function update_menu($conn, $menu_id, $menu_link, $menu_image)
-{
-  $sql = "UPDATE `menu` SET
-              `menu_link` = :menu_link,
-              `menu_image` = :menu_image
-            WHERE `id` = :menu_id";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":menu_link" => $menu_link,
-    ":menu_image" => $menu_image,
-    ":menu_id" => $menu_id
-  ));
-}
-
-function update_menu_title($conn, $menu_id, $menu_title, $lang_id)
-{
-  $sql = "UPDATE `menu_title` SET
-              `menu_title` = :menu_title,
-              `lang_id` = :lang_id
-            WHERE `menu_id` = :menu_id";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":menu_title" => $menu_title,
-    ":lang_id" => $lang_id,
-    ":menu_id" => $menu_id
-  ));
-}
-
-function update_menu_subtitle($conn, $menu_id, $menu_subtitle, $lang_id)
-{
-  $sql = "UPDATE `menu_subtitle` SET
-              `menu_subtitle` = :menu_subtitle,
-              `lang_id` = :lang_id
-            WHERE `menu_id` = :menu_id";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":menu_subtitle" => $menu_subtitle,
-    ":lang_id" => $lang_id,
-    ":menu_id" => $menu_id
   ));
 }
 

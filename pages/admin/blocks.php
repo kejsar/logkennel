@@ -1,5 +1,5 @@
-<?php // var_dump($_POST); ?>
-<section class="puppies">
+
+<section class="blocks">
   <div class="container">
 
     <div class="row">
@@ -12,9 +12,9 @@
         </div>
 
         <div class="row">
-      
-          <div class="col">
-            <form method="post">
+          <form method="post">
+        
+            <div class="col">
               <div class="form-group">
                 <input type="text" class="form-control" name="title">
               </div>
@@ -24,13 +24,28 @@
                 </textarea>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
+            </div>
 
-          <div class="col">
-            img
-          </div>
+            <div class="col">
+            
+              <div class="form-group row">
+                <div class="card">
+                  <img src="#" alt="..." class="card-img-top" id="card-img-top">
+                </div>
+              </div>
 
+              <div class="form-group row">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="image-input" id="imageinput">
+                    <label for="imageinput" class="custom-file-label">Choose file</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </form>
         </div>
       
       </div>
@@ -45,18 +60,18 @@
     <div class="row">
       <div class="col">
 
-        <h1>О сайте</h1>
+        <h1>О сайте в футере</h1>
         
         <form method="post">
-          <div class="form-group">
-            <input type="text" class="form-control" name="title">
-          </div>
+        
           <div class="form-group">
             <textarea name="mytext">
               Welcome to TinyMCE!
             </textarea>
           </div>
+
           <button type="submit" class="btn btn-primary">Submit</button>
+
         </form>
       
       </div>
@@ -74,26 +89,22 @@
         <h1>Контакты</h1>
         
         <form method="post">
-          <div class="form-group">
-            <input type="text" class="form-control" name="title">
-          </div>
-          <div class="form-group">
-            <textarea name="mytext">
-              Welcome to TinyMCE!
-            </textarea>
-          </div>
 
           <div class="form-group row">
             <label for="contact-text" class="col-sm-2 col-form-label">Contact text</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="contact-text">
+              <textarea name="contact-text" id="contact-text">
+                Welcome to TinyMCE!
+              </textarea>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="contact-text-footer" class="col-sm-2 col-form-label">Contact text in the footer</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="contact-text-footer">
+              <textarea name="contact-text-footer" id="contact-text-footer">
+                Welcome to TinyMCE!
+              </textarea>
             </div>
           </div>
 
@@ -112,6 +123,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
+
         </form>
       
       </div>
