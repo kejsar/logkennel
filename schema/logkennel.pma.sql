@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 09, 2020 at 10:47 AM
+-- Generation Time: Dec 06, 2020 at 05:44 PM
 -- Server version: 10.3.22-MariaDB
 -- PHP Version: 7.1.33
 
@@ -29,20 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin_menu` (
   `id` int(11) UNSIGNED NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `admin_menu_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admin_menu`
 --
 
-INSERT INTO `admin_menu` (`id`, `link`, `image`) VALUES
-(1, 'main', NULL),
-(2, 'dog', NULL),
-(3, 'news', NULL),
-(4, 'block', NULL),
-(5, 'menu', NULL);
+INSERT INTO `admin_menu` (`id`, `admin_menu_link`) VALUES
+(3, 'blocks'),
+(2, 'dogs'),
+(1, 'news');
 
 -- --------------------------------------------------------
 
@@ -52,26 +49,22 @@ INSERT INTO `admin_menu` (`id`, `link`, `image`) VALUES
 
 CREATE TABLE `admin_menu_title` (
   `id` int(11) UNSIGNED NOT NULL,
-  `menu_id` int(11) UNSIGNED NOT NULL,
-  `menu_title` varchar(255) NOT NULL,
+  `admin_menu_id` int(11) UNSIGNED NOT NULL,
+  `admin_menu_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admin_menu_title`
 --
 
-INSERT INTO `admin_menu_title` (`id`, `menu_id`, `menu_title`, `lang_id`) VALUES
-(1, 1, 'Главная', 1),
-(2, 1, 'Main', 2),
+INSERT INTO `admin_menu_title` (`id`, `admin_menu_id`, `admin_menu_title`, `lang_id`) VALUES
+(1, 1, 'Новости', 1),
+(2, 1, 'News', 2),
 (3, 2, 'Собачки', 1),
 (4, 2, 'Dogs', 2),
-(5, 3, 'Новости', 1),
-(6, 3, 'News', 2),
-(7, 4, 'Блоки', 1),
-(8, 4, 'Blocks', 2),
-(9, 5, 'Меню', 1),
-(10, 5, 'Menu', 2);
+(5, 3, 'Блоки', 1),
+(6, 3, 'Blocks', 2);
 
 -- --------------------------------------------------------
 
@@ -81,8 +74,21 @@ INSERT INTO `admin_menu_title` (`id`, `menu_id`, `menu_title`, `lang_id`) VALUES
 
 CREATE TABLE `block` (
   `id` int(11) UNSIGNED NOT NULL,
-  `block_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `block_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `block_image`
+--
+
+CREATE TABLE `block_image` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `block_id` int(11) UNSIGNED NOT NULL,
+  `block_image_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `block_image_alt_text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -93,9 +99,9 @@ CREATE TABLE `block` (
 CREATE TABLE `block_text` (
   `id` int(11) UNSIGNED NOT NULL,
   `block_id` int(11) UNSIGNED NOT NULL,
-  `block_text` text NOT NULL,
+  `block_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -106,9 +112,9 @@ CREATE TABLE `block_text` (
 CREATE TABLE `block_title` (
   `id` int(11) UNSIGNED NOT NULL,
   `block_id` int(11) UNSIGNED NOT NULL,
-  `block_title` varchar(255) NOT NULL,
+  `block_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -118,30 +124,22 @@ CREATE TABLE `block_title` (
 
 CREATE TABLE `dog` (
   `id` int(11) UNSIGNED NOT NULL,
-  `birth` date DEFAULT NULL,
-  `teeth` varchar(255) DEFAULT NULL,
-  `patella` varchar(255) DEFAULT NULL,
-  `owner` varchar(255) DEFAULT NULL,
-  `after` varchar(255) DEFAULT NULL,
-  `under` varchar(255) DEFAULT NULL,
+  `dog_birth` date DEFAULT NULL,
   `gender_type` tinyint(1) UNSIGNED NOT NULL,
-  `puppy` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `for_sale` tinyint(1) DEFAULT NULL,
+  `dog_info` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dog`
 --
 
-INSERT INTO `dog` (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`, `gender_type`, `puppy`) VALUES
-(1, '1928-01-01', 'sdfg', 'wert', 'ytu', 'tyuk', 'fgh', 1, 0),
-(2, '1985-10-04', 'afsdgar', 'awsrtwqer', 'gdfsgdfg', 'xcvbsd', 'gsaergsdf', 1, 0),
-(3, '1990-03-03', 'asdfa', 'dgasd', 'fgdsf', 'ghsdf', 'gsdfg', 1, 1),
-(4, '1990-02-02', 'awgrw', 'garewq', 'gwer', 'tgerqwag', 'wer', 0, 0),
-(5, '1990-02-02', 'awgrw', 'garewq', 'gwer', 'tgerqwag', 'wer', 0, 0),
-(6, '1985-10-04', 'yeuj', 'dryujh', 'fdh', 'dfgjh', 'dfgh', 1, 1),
-(7, '1985-10-04', 'yeuj', 'dryujh', 'fdh', 'dfgjh', 'dfgh', 1, 1),
-(8, '1993-01-01', 'wsthsh', 'wrthrt', 'hwrethws', 'erhgyqwaer', 'tgqwaertgq', 0, 1),
-(9, '1990-02-02', 'awgrw', 'garewq', 'gwer', 'tgerqwag', 'wer', 0, 0);
+INSERT INTO `dog` (`id`, `dog_birth`, `gender_type`, `for_sale`, `dog_info`) VALUES
+(1, '2020-12-01', 1, 0, '<p>фывап кафпкеп крпавыапр ывапичясвми</p>\r\n<p>савпраыер вячапивап ваып в</p>\r\n<p>вачпрыапрывапывапвапф</p>'),
+(2, '2020-12-01', 1, 0, '<p>фывап кафпкеп крпавыапр ывапичясвми</p>\r\n<p>савпраыер вячапивап ваып в</p>\r\n<p>вачпрыапрывапывапвапф</p>'),
+(3, '2020-12-02', 0, 1, '<p>dhsdfhs sdfgsdf&nbsp;</p>\r\n<p>sdfgwaergfasfdgadsf sdfgsadfgasdf asdfasdfasd</p>'),
+(4, '2020-12-03', 0, 0, '<p>sdfgasdfg&nbsp;</p>\r\n<p>dfghsdfhgsd&nbsp;</p>\r\n<p>shgsdfg dsfgsdfg</p>'),
+(5, '2020-12-01', 0, 0, '<p>sdfg afasdfg asdfg afg adrfg&nbsp;</p>\r\n<p>fsghs ghsfgh sadfg dafg dgfa</p>\r\n<p>asdfgasd asdfasdfasdf</p>');
 
 -- --------------------------------------------------------
 
@@ -151,22 +149,22 @@ INSERT INTO `dog` (`id`, `birth`, `teeth`, `patella`, `owner`, `after`, `under`,
 
 CREATE TABLE `dog_gender` (
   `id` tinyint(1) UNSIGNED NOT NULL,
-  `gender` varchar(255) NOT NULL,
+  `gender_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `gender_type` tinyint(1) UNSIGNED NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dog_gender`
 --
 
-INSERT INTO `dog_gender` (`id`, `gender`, `gender_type`, `lang_id`) VALUES
-(1, 'мужской', 1, 1),
-(2, 'женский', 0, 1),
+INSERT INTO `dog_gender` (`id`, `gender_name`, `gender_type`, `lang_id`) VALUES
+(1, 'мальчик', 1, 1),
+(2, 'девочка', 0, 1),
 (3, 'male', 1, 2),
 (4, 'female', 0, 2),
-(5, 'чоловіча', 1, 3),
-(6, 'жіноча', 0, 3);
+(5, 'хлопчик', 1, 3),
+(6, 'дівчинка', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -177,25 +175,21 @@ INSERT INTO `dog_gender` (`id`, `gender`, `gender_type`, `lang_id`) VALUES
 CREATE TABLE `dog_image` (
   `id` int(11) UNSIGNED NOT NULL,
   `dog_id` int(11) UNSIGNED NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `alt` varchar(255) DEFAULT NULL,
+  `dog_image_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dog_image_alt_text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `main` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dog_image`
 --
 
-INSERT INTO `dog_image` (`id`, `dog_id`, `link`, `alt`, `main`) VALUES
-(1, 1, 'image.jpg', 'alt image text', 1),
-(2, 2, 'image.jpg', 'alt image text', 1),
-(3, 3, 'image.jpg', 'alt image text', 1),
-(4, 4, 'image.jpg', 'alt image text', 1),
-(5, 5, 'image.jpg', 'alt image text', 1),
-(6, 6, 'image.jpg', 'alt image text', 1),
-(7, 7, 'image.jpg', 'alt image text', 1),
-(8, 8, 'image.jpg', 'alt image text', 1),
-(9, 9, 'image.jpg', 'alt image text', 1);
+INSERT INTO `dog_image` (`id`, `dog_id`, `dog_image_link`, `dog_image_alt_text`, `main`) VALUES
+(1, 1, '1607208890', 'alt image text', 1),
+(2, 2, '1607209416', 'alt image text', 1),
+(3, 3, '1607214377', 'alt image text', 1),
+(4, 4, '1607214879', 'alt image text', 1),
+(5, 5, '1607260056', 'asdwfewaf sadfawefasdfsadf asdfaDS', 1);
 
 -- --------------------------------------------------------
 
@@ -206,70 +200,20 @@ INSERT INTO `dog_image` (`id`, `dog_id`, `link`, `alt`, `main`) VALUES
 CREATE TABLE `dog_name` (
   `id` int(11) UNSIGNED NOT NULL,
   `dog_id` int(11) UNSIGNED NOT NULL,
-  `dog_name` varchar(255) NOT NULL,
+  `dog_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dog_name`
 --
 
 INSERT INTO `dog_name` (`id`, `dog_id`, `dog_name`, `lang_id`) VALUES
-(1, 1, 'asdf asdfasdfsad', 1),
-(2, 2, 'vzsd rqwrefwaef', 1),
-(3, 3, 'wqefwqaefasd qqq', 1),
-(4, 4, 'whywt ersfdg sad fg', 1),
-(5, 5, 'whywtersfdgsadfg', 1),
-(6, 6, 'wergsdfgsd', 1),
-(7, 7, 'wergsdfgsd', 1),
-(8, 8, 'asertgqaefrgser', 1),
-(9, 9, 'whywtersfdgsadfg', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `dog_result`
---
-
-CREATE TABLE `dog_result` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `dog_id` int(11) UNSIGNED NOT NULL,
-  `result_text` varchar(255) NOT NULL,
-  `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `dog_result`
---
-
-INSERT INTO `dog_result` (`id`, `dog_id`, `result_text`, `lang_id`) VALUES
-(1, 1, 'ytegsdfh hsdrtghse', 1),
-(2, 1, 'ytegsdfh hsdrtghse', 1),
-(3, 1, 'ytegsdfh hsdrtghse', 1),
-(4, 2, 'gvsaergtwe', 1),
-(5, 2, 'sgdfgew', 1),
-(6, 2, 'gvfdfdsa', 1),
-(7, 3, 'gsdfg', 1),
-(8, 3, 'gsdfg', 1),
-(9, 3, 'gsdfg', 1),
-(10, 4, 'tgwqertg', 1),
-(11, 4, 'tgwqertg', 1),
-(12, 4, 'tgwqertg', 1),
-(13, 5, 'tgwer', 1),
-(14, 5, 'gtwer', 1),
-(15, 5, 'tgwqertg', 1),
-(16, 6, 'dfgjh', 1),
-(17, 6, 'dfgjd', 1),
-(18, 6, 'fgjdfgh', 1),
-(19, 7, 'dfgjh', 1),
-(20, 7, 'dfgjd', 1),
-(21, 7, 'fgjdfgh', 1),
-(22, 8, 'wretqawert', 1),
-(23, 8, 'qawretq', 1),
-(24, 8, 'rwetqwaert', 1),
-(25, 9, 'asdfasdfs', 1),
-(26, 9, 'asdfasdfs', 1),
-(27, 9, 'asdfasdfs', 1);
+(1, 1, 'asdfsad', 1),
+(2, 2, 'qwerqwer', 1),
+(3, 3, 'sdfgsdfgd', 1),
+(4, 4, 'ajy sdtwseargdsfa', 1),
+(5, 5, 'sadgreagasdfgasdf', 1);
 
 -- --------------------------------------------------------
 
@@ -279,15 +223,15 @@ INSERT INTO `dog_result` (`id`, `dog_id`, `result_text`, `lang_id`) VALUES
 
 CREATE TABLE `lang` (
   `id` tinyint(1) UNSIGNED NOT NULL,
-  `link` varchar(3) NOT NULL,
-  `lang` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `lang_code` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lang_name` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `lang`
 --
 
-INSERT INTO `lang` (`id`, `link`, `lang`) VALUES
+INSERT INTO `lang` (`id`, `lang_code`, `lang_name`) VALUES
 (1, 'ru', 'русский'),
 (2, 'en', 'english'),
 (3, 'uk', 'український');
@@ -300,20 +244,20 @@ INSERT INTO `lang` (`id`, `link`, `lang`) VALUES
 
 CREATE TABLE `menu` (
   `id` int(11) UNSIGNED NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `menu_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `menu_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`id`, `link`, `image`) VALUES
+INSERT INTO `menu` (`id`, `menu_link`, `menu_image`) VALUES
 (1, 'main', 'img-main.jpg'),
-(2, 'males', 'img-males.jpg'),
-(3, 'females', 'img-females.jpg'),
-(4, 'puppies', 'img-puppies.jpg'),
-(5, 'news', 'img-news.jpg'),
+(2, 'news', 'img-news.jpg'),
+(3, 'males', 'img-males.jpg'),
+(4, 'females', 'img-females.jpg'),
+(5, 'for-sale', 'img-for-sale.jpg'),
 (6, 'contact', 'img-contact.jpg');
 
 -- --------------------------------------------------------
@@ -325,9 +269,9 @@ INSERT INTO `menu` (`id`, `link`, `image`) VALUES
 CREATE TABLE `menu_subtitle` (
   `id` int(11) UNSIGNED NOT NULL,
   `menu_id` int(11) UNSIGNED NOT NULL,
-  `menu_subtitle` varchar(255) NOT NULL,
+  `menu_subtitle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `menu_subtitle`
@@ -335,10 +279,10 @@ CREATE TABLE `menu_subtitle` (
 
 INSERT INTO `menu_subtitle` (`id`, `menu_id`, `menu_subtitle`, `lang_id`) VALUES
 (1, 1, 'Короткое описание страницы - Главная', 1),
-(2, 2, 'Короткое описание страницы - Мальчики', 1),
-(3, 3, 'Короткое описание страницы - Девочки', 1),
-(4, 4, 'Короткое описание страницы - Щеночки', 1),
-(5, 5, 'Короткое описание страницы - Новости', 1),
+(2, 2, 'Короткое описание страницы - Новости', 1),
+(3, 3, 'Короткое описание страницы - Мальчики', 1),
+(4, 4, 'Короткое описание страницы - Девочки', 1),
+(5, 5, 'Короткое описание страницы - Продажа', 1),
 (6, 6, 'Короткое описание страницы - Контакты', 1);
 
 -- --------------------------------------------------------
@@ -350,27 +294,27 @@ INSERT INTO `menu_subtitle` (`id`, `menu_id`, `menu_subtitle`, `lang_id`) VALUES
 CREATE TABLE `menu_title` (
   `id` int(11) UNSIGNED NOT NULL,
   `menu_id` int(11) UNSIGNED NOT NULL,
-  `menu_title` varchar(255) NOT NULL,
+  `menu_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `menu_title`
 --
 
 INSERT INTO `menu_title` (`id`, `menu_id`, `menu_title`, `lang_id`) VALUES
-(19, 1, 'Главная', 1),
-(20, 1, 'Main', 2),
-(21, 2, 'Мальчики', 1),
-(22, 2, 'Male', 2),
-(23, 3, 'Девочки', 1),
-(24, 3, 'Female', 2),
-(25, 4, 'Щеночки', 1),
-(26, 4, 'Puppies', 2),
-(27, 5, 'Новости', 1),
-(28, 5, 'News', 2),
-(29, 6, 'Контакты', 1),
-(30, 6, 'Contact', 2);
+(1, 1, 'Главная', 1),
+(2, 1, 'Main', 2),
+(3, 2, 'Новости', 1),
+(4, 2, 'News', 2),
+(5, 3, 'Мальчики', 1),
+(6, 3, 'Male', 2),
+(7, 4, 'Девочки', 1),
+(8, 4, 'Female', 2),
+(9, 5, 'Продажа', 1),
+(10, 5, 'For Sale', 2),
+(11, 6, 'Контакты', 1),
+(12, 6, 'Contact', 2);
 
 -- --------------------------------------------------------
 
@@ -380,10 +324,10 @@ INSERT INTO `menu_title` (`id`, `menu_id`, `menu_title`, `lang_id`) VALUES
 
 CREATE TABLE `news` (
   `id` int(11) UNSIGNED NOT NULL,
-  `year` int(4) UNSIGNED NOT NULL,
-  `month` int(2) UNSIGNED NOT NULL,
-  `day` int(2) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `news_year` int(4) UNSIGNED NOT NULL,
+  `news_month` int(2) UNSIGNED NOT NULL,
+  `news_day` int(2) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -394,10 +338,10 @@ CREATE TABLE `news` (
 CREATE TABLE `news_image` (
   `id` int(11) UNSIGNED NOT NULL,
   `news_id` int(11) UNSIGNED NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `alt` varchar(255) DEFAULT NULL,
+  `news_image_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `news_image_alt_text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `main` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -408,9 +352,9 @@ CREATE TABLE `news_image` (
 CREATE TABLE `news_link` (
   `id` int(11) UNSIGNED NOT NULL,
   `news_id` int(11) UNSIGNED NOT NULL,
-  `news_link` text NOT NULL,
+  `news_link` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -421,9 +365,9 @@ CREATE TABLE `news_link` (
 CREATE TABLE `news_text` (
   `id` int(11) UNSIGNED NOT NULL,
   `news_id` int(11) UNSIGNED NOT NULL,
-  `news_text` text NOT NULL,
+  `news_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -434,9 +378,22 @@ CREATE TABLE `news_text` (
 CREATE TABLE `news_title` (
   `id` int(11) UNSIGNED NOT NULL,
   `news_id` int(11) UNSIGNED NOT NULL,
-  `news_title` text NOT NULL,
+  `news_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `lang_id` tinyint(1) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `settings_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `settings_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lang_id` tinyint(1) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -447,7 +404,7 @@ CREATE TABLE `news_title` (
 --
 ALTER TABLE `admin_menu`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `link_UNIQUE` (`link`);
+  ADD UNIQUE KEY `link_UNIQUE` (`admin_menu_link`);
 
 --
 -- Indexes for table `admin_menu_title`
@@ -455,7 +412,7 @@ ALTER TABLE `admin_menu`
 ALTER TABLE `admin_menu_title`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_menu_text_lang1_idx` (`lang_id`),
-  ADD KEY `fk_menu_text_menu1_idx` (`menu_id`);
+  ADD KEY `fk_menu_text_menu1_idx` (`admin_menu_id`);
 
 --
 -- Indexes for table `block`
@@ -463,6 +420,13 @@ ALTER TABLE `admin_menu_title`
 ALTER TABLE `block`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name_UNIQUE` (`block_name`);
+
+--
+-- Indexes for table `block_image`
+--
+ALTER TABLE `block_image`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_block_image_block1_idx` (`block_id`);
 
 --
 -- Indexes for table `block_text`
@@ -491,7 +455,7 @@ ALTER TABLE `dog`
 --
 ALTER TABLE `dog_gender`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name_UNIQUE` (`gender`),
+  ADD UNIQUE KEY `name_UNIQUE` (`gender_name`),
   ADD KEY `fk_gender_lang1_idx` (`lang_id`);
 
 --
@@ -510,27 +474,19 @@ ALTER TABLE `dog_name`
   ADD KEY `fk_block_title_lang1_idx` (`lang_id`);
 
 --
--- Indexes for table `dog_result`
---
-ALTER TABLE `dog_result`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_result_dog1_idx` (`dog_id`),
-  ADD KEY `fk_result_lang1_idx` (`lang_id`);
-
---
 -- Indexes for table `lang`
 --
 ALTER TABLE `lang`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name_UNIQUE` (`lang`),
-  ADD UNIQUE KEY `link_UNIQUE` (`link`);
+  ADD UNIQUE KEY `name_UNIQUE` (`lang_name`),
+  ADD UNIQUE KEY `link_UNIQUE` (`lang_code`);
 
 --
 -- Indexes for table `menu`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `link_UNIQUE` (`link`);
+  ADD UNIQUE KEY `link_UNIQUE` (`menu_link`);
 
 --
 -- Indexes for table `menu_subtitle`
@@ -586,6 +542,13 @@ ALTER TABLE `news_title`
   ADD KEY `fk_news_title_news1` (`news_id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_settings_lang1_idx` (`lang_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -593,18 +556,24 @@ ALTER TABLE `news_title`
 -- AUTO_INCREMENT for table `admin_menu`
 --
 ALTER TABLE `admin_menu`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `admin_menu_title`
 --
 ALTER TABLE `admin_menu_title`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `block`
 --
 ALTER TABLE `block`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `block_image`
+--
+ALTER TABLE `block_image`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -623,7 +592,7 @@ ALTER TABLE `block_title`
 -- AUTO_INCREMENT for table `dog`
 --
 ALTER TABLE `dog`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `dog_gender`
@@ -635,19 +604,13 @@ ALTER TABLE `dog_gender`
 -- AUTO_INCREMENT for table `dog_image`
 --
 ALTER TABLE `dog_image`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `dog_name`
 --
 ALTER TABLE `dog_name`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `dog_result`
---
-ALTER TABLE `dog_result`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `lang`
@@ -671,7 +634,7 @@ ALTER TABLE `menu_subtitle`
 -- AUTO_INCREMENT for table `menu_title`
 --
 ALTER TABLE `menu_title`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -704,6 +667,12 @@ ALTER TABLE `news_title`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -712,7 +681,13 @@ ALTER TABLE `news_title`
 --
 ALTER TABLE `admin_menu_title`
   ADD CONSTRAINT `fk_menu_text_lang11` FOREIGN KEY (`lang_id`) REFERENCES `lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_menu_text_menu1` FOREIGN KEY (`menu_id`) REFERENCES `admin_menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_menu_text_menu1` FOREIGN KEY (`admin_menu_id`) REFERENCES `admin_menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `block_image`
+--
+ALTER TABLE `block_image`
+  ADD CONSTRAINT `fk_block_image_block1` FOREIGN KEY (`block_id`) REFERENCES `block` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `block_text`
@@ -746,13 +721,6 @@ ALTER TABLE `dog_image`
 ALTER TABLE `dog_name`
   ADD CONSTRAINT `fk_block_title_lang10` FOREIGN KEY (`lang_id`) REFERENCES `lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_dog_name_dog1` FOREIGN KEY (`dog_id`) REFERENCES `dog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `dog_result`
---
-ALTER TABLE `dog_result`
-  ADD CONSTRAINT `fk_result_dog1` FOREIGN KEY (`dog_id`) REFERENCES `dog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_result_lang1` FOREIGN KEY (`lang_id`) REFERENCES `lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `menu_subtitle`
@@ -794,6 +762,12 @@ ALTER TABLE `news_text`
 ALTER TABLE `news_title`
   ADD CONSTRAINT `fk_news_title_lang1` FOREIGN KEY (`lang_id`) REFERENCES `lang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_news_title_news1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `settings`
+--
+ALTER TABLE `settings`
+  ADD CONSTRAINT `fk_settings_lang1` FOREIGN KEY (`lang_id`) REFERENCES `lang` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

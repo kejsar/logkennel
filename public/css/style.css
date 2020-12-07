@@ -18,3 +18,19 @@
   border-radius: 100%;
   margin: 2px 7px 0 0;
 }
+
+img#card-img-top {
+  border-radius: calc(.25rem - 1px);
+}
+
+.img-thumbnail {
+  padding: .25rem;
+  background-color: #fff;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid #dee2e6;
+  border-radius: .25rem;
+  width: 200px;
+  height: 200px;
+}

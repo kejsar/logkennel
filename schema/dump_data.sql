@@ -18,11 +18,9 @@ INSERT INTO `lang` (`id`, `lang_code`, `lang_name`) VALUES
 --
 
 INSERT INTO `admin_menu` (`id`, `admin_menu_link`) VALUES
-(1, 'main'),
+(1, 'news'),
 (2, 'dogs'),
-(3, 'news'),
-(4, 'blocks'),
-(5, 'menu');
+(3, 'blocks');
 
 -- --------------------------------------------------------
 
@@ -31,16 +29,12 @@ INSERT INTO `admin_menu` (`id`, `admin_menu_link`) VALUES
 --
 
 INSERT INTO `admin_menu_title` (`id`, `admin_menu_id`, `admin_menu_title`, `lang_id`) VALUES
-(1, 1, 'Главная', 1),
-(2, 1, 'Main', 2),
+(1, 1, 'Новости', 1),
+(2, 1, 'News', 2),
 (3, 2, 'Собачки', 1),
 (4, 2, 'Dogs', 2),
-(5, 3, 'Новости', 1),
-(6, 3, 'News', 2),
-(7, 4, 'Блоки', 1),
-(8, 4, 'Blocks', 2),
-(9, 5, 'Меню', 1),
-(10, 5, 'Menu', 2);
+(5, 3, 'Блоки', 1),
+(6, 3, 'Blocks', 2);
 
 -- --------------------------------------------------------
 
@@ -67,7 +61,7 @@ INSERT INTO `menu` (`id`, `menu_link`, `menu_image`) VALUES
 (2, 'news', 'img-news.jpg'),
 (3, 'males', 'img-males.jpg'),
 (4, 'females', 'img-females.jpg'),
-(5, 'for-sale', 'img-for-sale.jpg'),
+(5, 'sale', 'img-sale.jpg'),
 (6, 'contact', 'img-contact.jpg');
 
 -- --------------------------------------------------------

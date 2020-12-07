@@ -48,20 +48,20 @@ function update_block_text($conn, $block_text, $block_id, $lang_id)
 // UPDATE DOG
 // ============================================================================
 
-function update_dog($conn, $dog_birth, $for_sale, $dog_info, $dog_owned, $dog_host, $dog_father, $dog_mother, $gender_type, $dog_id)
+function update_dog($conn, $dog_birth, $for_sale, $dog_info, $gender_type, $dog_id)
 {
   $sql = "UPDATE `dog` SET 
               `dog_birth` = :dog_birth,
-              `dog_info` = :dog_info,
+              `gender_type` = :gender_type,
               `for_sale` = :for_sale,
-              `gender_type` = :gender_type
+              `dog_info` = :dog_info
             WHERE `id` = :dog_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
     ":dog_birth" => $dog_birth,
-    ":dog_info" => $dog_info,
-    ":for_sale" => $for_sale,
     ":gender_type" => $gender_type,
+    ":for_sale" => $for_sale,
+    ":dog_info" => $dog_info,
     ":dog_id" => $dog_id
   ));
 }

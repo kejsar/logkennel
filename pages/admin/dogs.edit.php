@@ -1,111 +1,107 @@
 <?php
 
 $dog = get_dog($conn, SUBSUBPAGE, LANG);
+var_dump($dog);
+$img_url = SITE . "public/img/dogs/" . $dog["dog_image_link"] . ".jpg";
 
 ?>
 
-<section class="puppies">
+<section class="dog-edit">
   <div class="container">
     <div class="row">
       <div class="col">
 
         <h1>Редактировать собачку: <?=$dog["dog_name"]?></h1>
 
-        <div class="row justify-content-center">
-          <form class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6" action="<?php echo SITE; ?>admin/dog" method="post">
+        <form action="<?=SITE?>admin/dogs" method="post" enctype="multipart/form-data">
 
-            <input type="hidden" name="dog" value="edit">
+          <input type="hidden" name="page" value="dog">
+          <input type="hidden" name="action" value="edit">
+          <input type="hidden" name="id" value="<?=$dog["id"]?>">
+
+          <div class="row">
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
+
+              <div class="form-group">
+                <div class="card">
+                  <img src="<?=$img_url?>" alt="<?=$dog["dog_image_alt_text"]?>" class="card-img-top" id="card-img-top">
+                </div>
+              </div>
             
-            <input type="hidden" name="dog_id" value="<?=$dog["id"]?>">
-
-            <div class="form-group row">
-              <label for="dog-name" class="col-sm-4 col-form-label">Name</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="dog-name" name="dog_name" value="<?=$dog["dog_name"]?>">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="birth" class="col-sm-4 col-form-label">Birth date</label>
-              <div class="col-sm-4">
-                <input type="text" class="form-control" id="birth" name="birth" value="<?=$dog["birth"]?>">
-              </div>
-              <div class="form-check col-sm-4">
-                <input class="form-check-input" type="checkbox" id="puppy" name="puppy"<?php if ($dog["puppy"]) echo " checked"; ?>>
-                <label class="form-check-label" for="puppy">
-                  Щенок
-                </label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Gender</label>
-              <div class="col-sm-8">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender_type" id="male" value="1"<?php if ($dog["gender_type"]) echo " checked"; ?>>
-                  <label class="form-check-label" for="male">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender_type" id="female" value="0"<?php if (!$dog["gender_type"]) echo " checked"; ?>>
-                  <label class="form-check-label" for="female">Female</label>
+              <div class="form-group row">
+                <div class="col">
+                  <input type="text" class="form-control" name="img_alt" value="<?=$dog["dog_image_alt_text"]?>" required>
                 </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="teeth" class="col-sm-4 col-form-label">Teeth</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="teeth" name="teeth" value="<?=$dog["teeth"]?>">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="imageinput" id="imageinput">
+                    <label for="imageinput" class="custom-file-label">
+                      Choose file
+                    </label>
+                  </div>
+                </div>
               </div>
+
             </div>
 
-            <div class="form-group row">
-              <label for="patella" class="col-sm-4 col-form-label">Patella / PL</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="patella" name="patella" value="<?=$dog["patella"]?>">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
+            
+              <div class="form-group row">
+                <div class="col">
+                  <input type="text" class="form-control" name="name" value="<?=$dog["dog_name"]?>" required>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="owner" class="col-sm-4 col-form-label">Breeder/Owner</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="owner" name="owner" value="<?=$dog["owner"]?>">
+              <div class="form-group row">
+
+                <div class="col-5 col-xl-4">
+                  <input type="date" class="form-control" value="<?=$dog["dog_birth"]?>" name="birth">
+                </div>
+
+                <div class="col-3 col-xl-2 form-check">
+                  <input class="form-check-input" type="checkbox" id="for-sale" name="for_sale"<?php if ($dog["for_sale"]) echo " checked"?>>
+                  <label class="form-check-label" for="for-sale">
+                    For Sale
+                  </label>
+                </div>
+
+                <div class="col-4 col-xl-6">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="male" name="gender_type" value="1" required<?php if ($dog["gender_type"]) echo " checked"?>>
+                    <label class="form-check-label" for="male">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="female" name="gender_type" value="0" required<?php if (!$dog["gender_type"]) echo " checked"?>>
+                    <label class="form-check-label" for="female">
+                      Female
+                    </label>
+                  </div>
+                </div>
+
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="after" class="col-sm-4 col-form-label">After</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="after" name="after" value="<?=$dog["after"]?>">
+              <div class="form-group row">
+                <div class="col">
+                  <textarea name="info"><?=$dog["dog_info"]?></textarea>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="under" class="col-sm-4 col-form-label">Under</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="under" name="under" value="<?=$dog["under"]?>">
+              <div class="form-group row">
+                <div class="col">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
               </div>
+
             </div>
 
-<?php
-
-$results = get_dog_results($conn, SUBSUBPAGE, LANG);
-
-foreach ($results as $r) {
-  echo "<div class=\"form-group row\">";
-  echo "  <label class=\"col-sm-4 col-form-label\">results</label>";
-  echo "  <div class=\"col-sm-8\">";
-  echo "    <input type=\"text\" class=\"form-control\" name=\"results[]\" value=\"" . $r . "\">";
-  echo "  </div>";
-  echo "</div>";
-}
-
-?>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-          </form>
-        </div>
+          </div>
+        </form>
 
       </div>
     </div>

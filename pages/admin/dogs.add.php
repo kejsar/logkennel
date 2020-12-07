@@ -1,129 +1,99 @@
 
-<section class="puppies">
+<section class="dog-add">
   <div class="container">
     <div class="row">
       <div class="col">
 
         <h1>Добавить новую собачку</h1>
 
-        <div class="row justify-content-center">
-          <form class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6" action="<?php echo SITE; ?>admin/dog" method="post" enctype="multipart/form-data">
+        <form action="<?=SITE?>admin/dogs" method="post" enctype="multipart/form-data">
 
-            <input type="hidden" name="dog" value="add">
+          <input type="hidden" name="page" value="dog">
+          <input type="hidden" name="action" value="add">
 
-            <div class="card" style="width: 18rem;">
-              <img src="#" alt="..." class="card-img-top" id="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on teh card</p>
+          <div class="row">
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
+
+              <div class="form-group">
+                <div class="card">
+                  <img src="<?=SITE?>public/img/site/dog.jpg" alt="<?=$dog["dog_image_alt_text"]?>" class="card-img-top" id="card-img-top">
+                </div>
               </div>
-            </div>
+            
+              <div class="form-group row">
+                <div class="col">
+                  <input type="text" class="form-control" name="img_alt" placeholder="Сео-текст для изображения" required>
+                </div>
+              </div>
 
-            <div class="form-group row">
-              <div class="col">
+              <div class="form-group">
                 <div class="input-group">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="image-input" id="imageinput">
-                    <label for="imageinput" class="custom-file-label">Choose file</label>
+                    <input type="file" class="custom-file-input" name="imageinput" id="imageinput">
+                    <label for="imageinput" class="custom-file-label">
+                      Choose file
+                    </label>
                   </div>
                 </div>
               </div>
+
             </div>
 
-            <div class="form-group row">
-              <label for="dog-name" class="col-sm-4 col-form-label">Name</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="dog-name" name="dog_name">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="birth" class="col-sm-4 col-form-label">Birth date</label>
-              <div class="col-sm-4">
-                <input type="text" class="form-control" id="birth" name="birth">
-              </div>
-              <div class="form-check col-sm-4">
-                <input class="form-check-input" type="checkbox" id="puppy" name="puppy">
-                <label class="form-check-label" for="puppy">
-                  Щенок
-                </label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Gender</label>
-              <div class="col-sm-8">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender_type" id="male" value="1">
-                  <label class="form-check-label" for="male">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender_type" id="female" value="0">
-                  <label class="form-check-label" for="female">Female</label>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
+            
+              <div class="form-group row">
+                <div class="col">
+                  <input type="text" class="form-control" name="name" placeholder="Имя" required>
                 </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="teeth" class="col-sm-4 col-form-label">Teeth</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="teeth" name="teeth">
+              <div class="form-group row">
+
+                <div class="col-5 col-xl-4">
+                  <input type="date" class="form-control" name="birth">
+                </div>
+
+                <div class="col-3 col-xl-2 form-check">
+                  <input class="form-check-input" type="checkbox" id="for-sale" name="for_sale">
+                  <label class="form-check-label" for="for-sale">
+                    For Sale
+                  </label>
+                </div>
+
+                <div class="col-4 col-xl-6">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="male" name="gender_type" value="1" required>
+                    <label class="form-check-label" for="male">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="female" name="gender_type" value="0" required>
+                    <label class="form-check-label" for="female">
+                      Female
+                    </label>
+                  </div>
+                </div>
+
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="patella" class="col-sm-4 col-form-label">Patella / PL</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="patella" name="patella">
+              <div class="form-group row">
+                <div class="col">
+                  <textarea name="info" placeholder="Описание"></textarea>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="owner" class="col-sm-4 col-form-label">Breeder/Owner</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="owner" name="owner">
+              <div class="form-group row">
+                <div class="col">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
               </div>
+
             </div>
 
-            <div class="form-group row">
-              <label for="after" class="col-sm-4 col-form-label">After</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="after" name="after">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="under" class="col-sm-4 col-form-label">Under</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="under" name="under">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">results</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" name="results[]">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">results</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" name="results[]">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">results</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" name="results[]">
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-          </form>
-        </div>
+          </div>
+        </form>
 
       </div>
     </div>

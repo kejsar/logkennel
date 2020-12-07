@@ -13,6 +13,6 @@ function readURL(input) {
 
 $("#imageinput").on("change", function() {
   readURL(this);
-  var fileName = $(this).val();
+  var fileName = this.files[0].name;
   $(this).next(".custom-file-label").html(fileName);
 })

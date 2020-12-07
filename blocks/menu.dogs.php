@@ -15,7 +15,7 @@
           <div class="collapse navbar-collapse" id="dogs-navbar-content">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "all") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/all">All</a>
+                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "all") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs">All</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "males") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/males">Males</a>
@@ -24,7 +24,7 @@
                 <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "females") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/females">Females</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "for-sale") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/for-sale">For Sale</a>
+                <a class="nav-link<?php if (defined("SUBPAGE") && SUBPAGE === "sale") echo " active"; ?>" href="<?php echo SITE; ?>admin/dogs/sale">For Sale</a>
               </li>
             </ul>
             <div class="my-2 my-lg-0">

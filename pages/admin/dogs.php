@@ -1,117 +1,123 @@
 <?php
 
+var_dump($_POST);
+var_dump($_FILES);
+// exit;
+
 require BLOCKS_DIR . "menu.dogs.php";
 
 // ADD NEW DOG ================================================================
 
-if (isset($_POST["dog"]) && $_POST["dog"] === "add") {
+if (
+       (isset($_POST["page"]) && $_POST["page"] === "dog")
+    && (isset($_POST["action"]) && $_POST["action"] === "add")
+) {
 
-  if (isset($_FILES["image-input"])) {
+  $dog_added = false;
+  $link = "";
+  $img_upload_error = "";
+
+  if (isset($_FILES["imageinput"])) {
     require PARTS_DIR . "img.conv.php";
+    $link = $new_img_name;
+    $img_upload_error = $err_message;
+    $main = "1";
+  }
 
-    $link = "image.jpg";
-    $img_upload_error = "";
-    
-    $img_convert_message = image_convert();
-    
-    if (is_numeric($img_convert_message)) {
-      $link = $img_convert_message;
-    } else {
-      $img_upload_error = $img_convert_message;
+
+  if ($link && !$img_upload_error) {
+    $name        = isset($_POST["name"]) ? $_POST["name"] : "";
+    $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
+    $for_sale    = isset($_POST["for_sale"]) && $_POST["for_sale"] === "on" ? 1 : 0;
+    $gender_type = isset($_POST["gender_type"]) ? $_POST["gender_type"] : "";
+    $info        = isset($_POST["info"]) ? $_POST["info"] : "";
+    $alt         = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
+  
+    $dog_id = add_dog($conn, $birth, $gender_type, $for_sale, $info);
+
+    if ($dog_id) {
+      $dog_name_added = add_dog_name($conn, $dog_id, $name, LANG);
+      $dog_image_added = add_dog_image($conn, $dog_id, $link, $alt, $main);
+    }
+  
+    if (   $dog_id
+        && $dog_name_added
+        && $dog_image_added
+    ) {
+      $dog_added = true;
     }
   }
-
-  $dog_name    = isset($_POST["dog_name"]) ? $_POST["dog_name"] : "";
-  $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
-  $for_sale    = isset($_POST["for_sale"]) && $_POST["for_sale"] === "on" ? 1 : 0;
-  $gender_type = isset($_POST["gender_type"]) ? $_POST["gender_type"] : "";
-  $info        = isset($_POST["info"]) ? $_POST["info"] : "";
-
-  $alt = "alt image text";
-  $main = "1";
-
-  $dog_id = add_dog($conn, $birth, $gender_type, $for_sale);
-  $raw_dog_info_added = $dog_id ? true : false;
-  if ($raw_dog_info_added) {
-    $dog_name_added = add_dog_name($conn, $dog_id, $dog_name, LANG);
-    $dog_image_added = add_dog_image($conn, $dog_id, $link, $alt, $main);
-  }
-  $dog_info_added = add_dog_info($conn, $dog_id, $info, LANG);
-
-  if (   $raw_dog_info_added
-      && $dog_name_added
-      && $dog_image_added
-      && $dog_info_added
-  ) {
-    $dog_added = true;
-  } else {
-    $dog_added = false;
-  }
+  
 }
 
 // EDIT CURRENT DOG ===========================================================
 
-if (isset($_POST["dog"]) && $_POST["dog"] === "edit") {
+if (
+       (isset($_POST["page"]) && $_POST["page"] === "dog")
+    && (isset($_POST["action"]) && $_POST["action"] === "edit")
+) {
 
-  $dog_id      = $_POST["dog_id"];
-  $dog_name    = isset($_POST["dog_name"]) ? $_POST["dog_name"] : "";
+  $dog_id      = $_POST["id"];
+  $dog_name    = isset($_POST["name"]) ? $_POST["name"] : "";
   $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
   $for_sale    = isset($_POST["for_sale"]) && $_POST["for_sale"] === "on" ? 1 : 0;
   $gender_type = isset($_POST["gender_type"]) ? $_POST["gender_type"] : "";
   $info        = isset($_POST["info"]) ? $_POST["info"] : "";
+  $alt         = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
 
-  $link = "image.jpg";
-  $alt = "alt image text";
-  $main = "1";
+  $dog_updated = false;
+  $link = "";
+  $img_upload_error = "";
+  $dog_image_updated = 1;
 
-  $dog_updated = update_dog($conn, $birth, $puppy, $teeth, $patella, $owner, $after, $under, $gender_type, $dog_id);
+  if (isset($_FILES["imageinput"]["tmp_name"]) && $_FILES["imageinput"]["tmp_name"] !== "") {
+    require PARTS_DIR . "img.conv.php";
+    $link = $new_img_name;
+    $img_upload_error = $err_message;
+    $main = "1";
+  }
+
+
+  $dog_updated = update_dog($conn, $birth, $for_sale, $info, $gender_type, $dog_id);
   $raw_dog_info_updated = $dog_updated ? true : false;
   if ($raw_dog_info_updated) {
     $dog_name_updated = update_dog_name($conn, $dog_id, $dog_name, LANG);
-    $dog_image_updated = update_dog_image($conn, $dog_id, $link, $alt, $main);
-  }  
-  $dog_info_updated = true;
-  foreach ($info as $info_text) {
-    if ($info_text !== "") {
-      $updated = update_dog_info($conn, $dog_id, $info_text, LANG);
-      if (!$updated) {
-        $dog_info_updated = false;
-      }
-    }
+    if ($link && !$img_upload_error) $dog_image_updated = update_dog_image($conn, $dog_id, $link, $alt, $main);
   }
 
   if (   $raw_dog_info_updated
       && $dog_name_updated
       && $dog_image_updated
-      && $dog_info_updated
   ) {
     $dog_updated = true;
-  } else {
-    $dog_updated = false;
   }
 }
 
 // SHOW DOG LIST ==============================================================
 
 $search_type = defined("SUBPAGE") ? SUBPAGE : "all";
+if ($search_type === "sale") $search_type = "for_sale";
 
 $dogs = get_dogs($conn, $search_type, LANG);
 
-foreach ($dogs as $k => $dog) {
-  $dogs[$k]["info"] = get_dog_info($conn, $dog["id"], LANG);
-}
-
 ?>
 
-<section class="puppies">
-  <div class="container-fluid">
+<section class="dogs">
+  <div class="container">
     <div class="row">
       <div class="col">
 
-<?php if (isset($dog_added) && $dog_added): ?>
+<?php if (isset($dog_added)): ?>
+  <?php if ($dog_added): ?>
         <div class="alert alert-success" role="alert">
           Собакен <b><?=$dog_name?></b> успешно добавлен!
         </div>
+  <?php else: ?>
+        <div class="alert alert-danger" role="alert">
+          Собакен <b><?=$dog_name?></b> не добавлен!
+          <?php if (isset($img_upload_error) && $img_upload_error !== "") echo $img_upload_error; ?>
+        </div>
+  <?php endif; ?>
 <?php endif; ?>
 
 <?php if (isset($dog_updated) && $dog_updated): ?>
@@ -121,48 +127,29 @@ foreach ($dogs as $k => $dog) {
 <?php endif; ?>
 
         <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Image</th>
-              <th scope="col">Name</th>
-              <th scope="col">Birth date</th>
-              <th scope="col">Puppy</th>
-              <th scope="col">Gender</th>
-              <th scope="col">Teeth</th>
-              <th scope="col">Patella / PL</th>
-              <th scope="col">Breeder/Owner</th>
-              <th scope="col">After</th>
-              <th scope="col">Under</th>
-              <th scope="col">info</th>
-              <th scope="col" colspan="2">Edit</th>
-            </tr>
-          </thead>
           <tbody>
 <?php
 
 foreach ($dogs as $dog) {
-  $puppy_icon = $dog["puppy"] ? "yes!" : "";
+
+  $for_sale_icon = $dog["for_sale"] ? "$$$" : "";
+  $img_url = SITE . "public/img/dogs/thumbs/" . $dog["dog_image_link"] . ".jpg";
+
   echo "<tr>";
-  echo "<th scope=\"row\">" . $dog["id"] . "</th>";
-  echo "<td><img src=\"" . SITE . "public/img/dogs/thumbs/" . $dog["link"] . ".jpg\" alt=\"" . $dog["alt"] . "\" /></td>";
-  echo "<td>" . $dog["dog_name"] . "</td>";
-  echo "<td>" . $dog["birth"] . "</td>";
-  echo "<td>" . $puppy_icon . "</td>";
-  echo "<td>" . $dog["gender"] . "</td>";
-  echo "<td>" . $dog["teeth"] . "</td>";
-  echo "<td>" . $dog["patella"] . "</td>";
-  echo "<td>" . $dog["owner"] . "</td>";
-  echo "<td>" . $dog["after"] . "</td>";
-  echo "<td>" . $dog["under"] . "</td>";
-  echo "<td>";
-  foreach ($dog["info"] as $info) {
-    echo $info . "</br>";
-  }
-  echo "</td>";
-  echo "<td><a class=\"btn btn-outline-primary\" href=\"" . SITE . "admin/dog/edit/" . $dog["id"] . "\" role=\"button\"><i class=\"far fa-edit\"></i></a></td>";
-  echo "<td><button type=\"button\" class=\"btn btn-outline-danger\"><i class=\"fas fa-times\"></i></button></td>";
+  echo "  <td rowspan=\"3\"><div style=\"background-image: url(" . $img_url . ")\" class=\"img-thumbnail\"></div></td>";
+  echo "  <td><h5>" . $dog["dog_name"] . "</h5></td>";
+  echo "  <td>" . $dog["dog_birth"] . "</td>";
+  echo "  <td>" . $dog["gender_name"] . "</td>";
+  echo "  <td>" . $for_sale_icon . "</td>";
   echo "</tr>";
+  echo "<tr>";
+  echo "  <td colspan=\"4\">" . $dog["dog_info"] . "</td>";
+  echo "</tr>";
+  echo "<tr>";
+  echo "  <td colspan=\"3\"><a class=\"btn btn-outline-primary\" href=\"" . SITE . "admin/dogs/edit/" . $dog["id"] . "\" role=\"button\"><i class=\"fas fa-edit\"></i> изменить</a></td>";
+  echo "  <td><a class=\"btn btn-outline-danger\" href=\"" . SITE . "admin/dogs/delete/" . $dog["id"] . "\" role=\"button\"><i class=\"fas fa-times\"></i> удалить</a></td>";
+  echo "</tr>";
+
 }
 
 ?>
@@ -173,4 +160,3 @@ foreach ($dogs as $dog) {
     </div>
   </div>
 </section>
-
