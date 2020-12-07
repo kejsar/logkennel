@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 06, 2020 at 05:45 PM
+-- Generation Time: Dec 08, 2020 at 01:04 AM
 -- Server version: 10.3.22-MariaDB
 -- PHP Version: 7.1.33
 
@@ -47,11 +47,9 @@ INSERT INTO `admin_menu_title` (`id`, `admin_menu_id`, `admin_menu_title`, `lang
 --
 
 INSERT INTO `dog` (`id`, `dog_birth`, `gender_type`, `for_sale`, `dog_info`) VALUES
-(1, '2020-12-01', 1, 0, '<p>фывап кафпкеп крпавыапр ывапичясвми</p>\r\n<p>савпраыер вячапивап ваып в</p>\r\n<p>вачпрыапрывапывапвапф</p>'),
-(2, '2020-12-01', 1, 0, '<p>фывап кафпкеп крпавыапр ывапичясвми</p>\r\n<p>савпраыер вячапивап ваып в</p>\r\n<p>вачпрыапрывапывапвапф</p>'),
-(3, '2020-12-02', 0, 1, '<p>dhsdfhs sdfgsdf&nbsp;</p>\r\n<p>sdfgwaergfasfdgadsf sdfgsadfgasdf asdfasdfasd</p>'),
-(4, '2020-12-03', 0, 0, '<p>sdfgasdfg&nbsp;</p>\r\n<p>dfghsdfhgsd&nbsp;</p>\r\n<p>shgsdfg dsfgsdfg</p>'),
-(5, '2020-12-01', 0, 0, '<p>sdfg afasdfg asdfg afg adrfg&nbsp;</p>\r\n<p>fsghs ghsfgh sadfg dafg dgfa</p>\r\n<p>asdfgasd asdfasdfasdf</p>');
+(10, '2020-12-01', 1, 1, '<p>asdf asdf asdf asdf a</p>\r\n<p>sd fa</p>\r\n<p>sdf asdfasdf asdf asdf</p>'),
+(11, '2020-12-02', 0, 1, '<p>asdfasd fasdf asdf</p>'),
+(12, '2020-12-03', 1, 0, '<p>asdfasdf</p>');
 
 --
 -- Dumping data for table `dog_gender`
@@ -70,22 +68,28 @@ INSERT INTO `dog_gender` (`id`, `gender_name`, `gender_type`, `lang_id`) VALUES
 --
 
 INSERT INTO `dog_image` (`id`, `dog_id`, `dog_image_link`, `dog_image_alt_text`, `main`) VALUES
-(1, 1, '1607208890', 'alt image text', 1),
-(2, 2, '1607209416', 'alt image text', 1),
-(3, 3, '1607214377', 'alt image text', 1),
-(4, 4, '1607214879', 'alt image text', 1),
-(5, 5, '1607260056', 'asdwfewaf sadfawefasdfsadf asdfaDS', 1);
+(48, 10, '1607377051', 'asdf asdf asdf asdfwae fwe', 1),
+(49, 11, '1607377070', 'sdfgsdfg', 1),
+(50, 12, '1607377090', 'asdfasdf', 1),
+(51, 10, '16073771170', '', 0),
+(52, 10, '16073771181', '', 0),
+(53, 10, '16073771182', '', 0),
+(54, 10, '16073771183', '', 0),
+(55, 10, '16073771194', '', 0),
+(56, 10, '16073771195', '', 0),
+(58, 10, '16073771570', '', 0),
+(59, 10, '16073771581', '', 0),
+(60, 10, '16073771582', '', 0),
+(61, 10, '16073771650', '', 0);
 
 --
 -- Dumping data for table `dog_name`
 --
 
 INSERT INTO `dog_name` (`id`, `dog_id`, `dog_name`, `lang_id`) VALUES
-(1, 1, 'asdfsad', 1),
-(2, 2, 'qwerqwer', 1),
-(3, 3, 'sdfgsdfgd', 1),
-(4, 4, 'ajy sdtwseargdsfa', 1),
-(5, 5, 'sadgreagasdfgasdf', 1);
+(10, 10, 'asdf asdfwe ew', 1),
+(11, 11, 'asdfasdf', 1),
+(12, 12, 'asdfgasdgdfg', 1);
 
 --
 -- Dumping data for table `lang`
