@@ -14,17 +14,13 @@ define("CONTENT_DIR", ROOT_DIR . "pages"  . DS . "content" . DS);
 define("PARTS_DIR",   ROOT_DIR . "pages"  . DS . "parts"   . DS);
 define("DB_DIR",      ROOT_DIR . "db"     . DS);
 
+require PARTS_DIR . "common.php";
+
 require DB_DIR . "init.php";
 require DB_DIR . "read.php";
 
 require PARTS_DIR . "auth.php";
 require PARTS_DIR . "init.php";
-
-function reload_page()
-{
-  header ('Location: ' . $_SERVER['REQUEST_URI']);
-  exit();
-}
 
 if (IS_ADMIN) {
   require DB_DIR . "create.php";

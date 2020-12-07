@@ -28,7 +28,7 @@ function admin_page_exists($conn, $page)
 function return_404()
 {
   http_response_code(404);
-  // include("my_404.php");
+  include(CONTENT_DIR . "404.php");
   die();
 }
 
@@ -47,8 +47,7 @@ function set_path($conn)
     define("PAGE", "main");
 
   } elseif (count($path) === 1 && $path[0] === "admin") {
-    header("Location: " . SITE . "admin/news");
-    die();
+    reload_page(SITE . "admin/news");
   } elseif ((count($path) < 5) && (page_exists($conn, $path[0]) || $path[0] === "admin")) {
 
     if (count($path) === 1) {
