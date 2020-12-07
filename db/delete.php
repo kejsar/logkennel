@@ -26,12 +26,12 @@ function delete_dog_by_dog_id($conn, $dog_id) {
   ));
 }
 
-function delete_dog_image($conn, $image_id) {
-  $sql = "DELETE FROM `dog_image` 
-            WHERE `id` = :image_id";
+function delete_dog_image($conn, $dog_image_link) {
+  $sql = "DELETE FROM `dog_image`
+            WHERE `dog_image_link` = :dog_image_link";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
-    ":image_id" => $image_id
+    ":dog_image_link" => $dog_image_link
   ));
 }
 

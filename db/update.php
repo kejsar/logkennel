@@ -80,18 +80,27 @@ function update_dog_name($conn, $dog_id, $dog_name, $lang_id)
   ));
 }
 
-function update_dog_image($conn, $dog_id, $dog_image_link, $dog_image_alt_text, $main)
+function update_dog_image($conn, $dog_id, $dog_image_link)
 {
   $sql = "UPDATE `dog_image` SET
-              `dog_image_link` = :dog_image_link,
-              `dog_image_alt_text` = :dog_image_alt_text,
-              `main` = :main
-            WHERE `dog_id` = :dog_id";
+              `dog_image_link` = :dog_image_link
+            WHERE `dog_id` = :dog_id
+              AND `main` = '1'";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
     ":dog_image_link" => $dog_image_link,
+    ":dog_id" => $dog_id
+  ));
+}
+
+function update_dog_image_alt_text($conn, $dog_id, $dog_image_alt_text)
+{
+  $sql = "UPDATE `dog_image` SET
+              `dog_image_alt_text` = :dog_image_alt_text
+            WHERE `dog_id` = :dog_id";
+  $sth = $conn->prepare($sql);
+  return $sth->execute(array(
     ":dog_image_alt_text" => $dog_image_alt_text,
-    ":main" => $main,
     ":dog_id" => $dog_id
   ));
 }

@@ -20,6 +20,21 @@ require DB_DIR . "read.php";
 require PARTS_DIR . "auth.php";
 require PARTS_DIR . "init.php";
 
+function reload_page()
+{
+  header ('Location: ' . $_SERVER['REQUEST_URI']);
+  exit();
+}
+
+if (IS_ADMIN) {
+  require DB_DIR . "create.php";
+  require DB_DIR . "update.php";
+  require DB_DIR . "delete.php";
+  if (isset($_POST["page"]) && $_POST["page"] === "dog") {
+    require PARTS_DIR . "dogs.process.php";
+  }
+}
+
 ?><!DOCTYPE html>
 <html lang="<?=LANG?>">
 <head>

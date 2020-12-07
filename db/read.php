@@ -75,12 +75,9 @@ function get_dogs($conn, $search_type, $lang_id) {
               `dog`.`for_sale`,
               `dog`.`dog_info`,
               `dog_gender`.`gender_name`,
-              `dog_image`.`dog_image_link`,
-              `dog_image`.`dog_image_alt_text`,
               `dog_name`.`dog_name`
             FROM `dog`
             INNER JOIN `dog_gender` ON `dog`.`gender_type` = `dog_gender`.`gender_type`
-            INNER JOIN `dog_image`  ON `dog`.`id` = `dog_image`.`dog_id`
             INNER JOIN `dog_name`   ON `dog`.`id` = `dog_name`.`dog_id`
 
             WHERE ";
@@ -91,7 +88,6 @@ function get_dogs($conn, $search_type, $lang_id) {
 
   $sql .= "       `dog_gender`.`lang_id` = :lang_id
               AND `dog_name`.`lang_id` = :lang_id
-              AND `dog_image`.`main` = '1'
 
             ORDER BY `dog`.`id` ASC";
   $sth = $conn->prepare($sql);
@@ -108,16 +104,12 @@ function get_dog($conn, $dog_id, $lang_id) {
               `dog`.`for_sale`,
               `dog`.`dog_info`,
               `dog`.`gender_type`,
-              `dog_image`.`dog_image_link`,
-              `dog_image`.`dog_image_alt_text`,
               `dog_name`.`dog_name`
             FROM `dog`
-              INNER JOIN `dog_image`  ON `dog`.`id` = `dog_image`.`dog_id`
               INNER JOIN `dog_name`   ON `dog`.`id` = `dog_name`.`dog_id`
 
             WHERE `dog`.`id` = :dog_id
-              AND `dog_name`.`lang_id` = :lang_id
-              AND `dog_image`.`main` = '1'";
+              AND `dog_name`.`lang_id` = :lang_id";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
     ":dog_id" => $dog_id,
@@ -141,13 +133,39 @@ function get_gender_name($conn, $gender_type, $lang_id) {
   return $result["gender_name"];
 }
 
-function get_dog_images($conn, $dog_id) {
+function get_dog_main_image($conn, $dog_id) {
   $sql = "SELECT 
               `dog_image_link`,
               `dog_image_alt_text`
             FROM `dog_image`
             WHERE `dog_id` = :dog_id
+              AND `main` = '1'";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":dog_id" => $dog_id
+  ));
+  return $sth->fetch();
+}
+
+function get_dog_images($conn, $dog_id) {
+  $sql = "SELECT 
+              `dog_image_link`
+            FROM `dog_image`
+            WHERE `dog_id` = :dog_id
               AND `main` = '0'";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":dog_id" => $dog_id
+  ));
+  return $sth->fetchAll();
+}
+
+function get_all_dog_images($conn, $dog_id) {
+  $sql = "SELECT 
+              `dog_image_link`,
+              `dog_image_alt_text`
+            FROM `dog_image`
+            WHERE `dog_id` = :dog_id";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
     ":dog_id" => $dog_id

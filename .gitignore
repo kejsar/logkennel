@@ -1,2 +1,3 @@
-/public/image/dogs/*.jpg
-/public/image/dogs/thumbs/*.jpg
+/public/img/dogs/*.jpg
+/public/img/dogs/thumbs/*.jpg
+# /.vscode

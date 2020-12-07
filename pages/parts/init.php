@@ -47,7 +47,7 @@ function set_path($conn)
     define("PAGE", "main");
 
   } elseif (count($path) === 1 && $path[0] === "admin") {
-    header("Location: " . SITE . "admin/dogs");
+    header("Location: " . SITE . "admin/news");
     die();
   } elseif ((count($path) < 5) && (page_exists($conn, $path[0]) || $path[0] === "admin")) {
 
