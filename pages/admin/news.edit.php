@@ -149,5 +149,11 @@ $date = $date_obj->format('Y-m-d');
     </div>
 <?php endif; ?>
 
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+
   </div>
 </section>

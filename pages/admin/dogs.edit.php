@@ -170,5 +170,11 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
     </div>
 <?php endif; ?>
 
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+
   </div>
 </section>
