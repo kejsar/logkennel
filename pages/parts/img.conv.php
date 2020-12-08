@@ -1,6 +1,6 @@
 <?php
 
-function upload_image($new_img_name, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg)
+function upload_image($new_img_name, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, $dir)
 {
   $file_name = preg_replace("#[^a-z.0-9]#i", "", $file_name); // filter the $file_name
   $kaboom = explode(".", $file_name); // Split file name into an array using the dot
@@ -9,8 +9,8 @@ function upload_image($new_img_name, $file_name, $file_tmp_loc, $file_type, $fil
   $err_message = "";
   
   $tmp_dir = ROOT_DIR . "public" . DS . "img" . DS . "tmp" . DS . $new_img_name  . "." . $file_ext;
-  $img_dir = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . $new_img_name  . ".jpg";
-  $thumb_dir = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . "thumbs" . DS . $new_img_name  . ".jpg";
+  $img_dir = ROOT_DIR . "public" . DS . "img" . DS . $dir . DS . $new_img_name  . ".jpg";
+  $thumb_dir = ROOT_DIR . "public" . DS . "img" . DS . $dir . DS . "thumbs" . DS . $new_img_name  . ".jpg";
   
   // START PHP Image Upload Error Handling --------------------------------
   if (!$file_tmp_loc) { // if file not chosen

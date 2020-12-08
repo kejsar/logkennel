@@ -20,10 +20,10 @@ if (isset($_POST["action"]) && $_POST["action"] === "add") {
     $file_error_msg = $_FILES["imageinput"]["error"];
 
     $link = date_timestamp_get(date_create());
-    $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg);
+    $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "dogs");
 
   }
-
+  
   if ($link && !$img_upload_error) {
     $name        = isset($_POST["name"]) ? $_POST["name"] : "";
     $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
@@ -80,7 +80,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
     $old_image = isset($_POST["old_image"]) ? $_POST["old_image"] : "";
 
     $link = date_timestamp_get(date_create());
-    $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg);
+    $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "dogs");
 
   }
 
@@ -161,7 +161,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "add_image") {
   
       if ($file_name !== "") {
         $link = date_timestamp_get(date_create()) . $i;
-        $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg);
+        $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "dogs");
       
         if (!$img_upload_error && $dog_id) {
           $dog_image_added = add_dog_image($conn, $dog_id, $link, $alt, $main);

@@ -256,63 +256,29 @@ function get_admin_menu($conn, $lang_id) {
 // READ NEWS
 // ============================================================================
 
-function get_news_items($conn, $lang_id) {
-  $sql = "SELECT 
-              `news`.`id`, 
-              `news`.`news_year`, 
-              `news`.`news_month`,
-              `news`.`news_day`,
-              `news_image`.`news_image_link`,
-              `news_image`.`news_image_alt_text`,
-              `news_link`.`news_link`,
-              `news_text`.`news_text`,
-              `news_title`.`news_title`
-            FROM `news`
-            INNER JOIN `news_image` ON `news`.`id` = `news_image`.`news_id`
-            INNER JOIN `news_link` ON `news`.`id` = `news_link`.`news_id`
-            INNER JOIN `news_text` ON `news`.`id` = `news_text`.`news_id`
-            INNER JOIN `news_title` ON `news`.`id` = `news_title`.`news_id`
-            WHERE `news_link`.`lang_id` = :lang_id
-              AND `news_text`.`lang_id` = :lang_id
-              AND `news_title`.`lang_id` = :lang_id";
+function get_news($conn)
+{
+  $sql = "SELECT * FROM `news`";
   $sth = $conn->prepare($sql);
-  $sth->execute(array(
-    ":lang_id" => $lang_id
-  ));
+  $sth->execute();
   return $sth->fetchAll();
 }
 
-function get_news_item_by_id($conn, $news_id, $lang_id) {
-  $sql = "SELECT 
-              `news`.`id`, 
-              `news`.`news_year`, 
-              `news`.`news_month`,
-              `news`.`news_day`,
-              `news_image`.`news_image_link`,
-              `news_image`.`news_image_alt`,
-              `news_link`.`news_link`,
-              `news_text`.`news_text`,
-              `news_title`.`news_title`
-            FROM `news`
-            INNER JOIN `news_image` ON `news`.`id` = `news_image`.`news_id`
-            INNER JOIN `news_link` ON `menu`.`id` = `news_link`.`news_id`
-            INNER JOIN `news_text` ON `menu`.`id` = `news_text`.`news_id`
-            INNER JOIN `news_title` ON `menu`.`id` = `news_title`.`news_id`
-            WHERE `news`.`id` = :news_id
-              AND `news_link`.`lang_id` = :lang_id
-              AND `news_text`.`lang_id` = :lang_id
-              AND `news_title`.`lang_id` = :lang_id";
+function get_news_item($conn, $news_id)
+{
+  $sql = "SELECT * FROM `news`
+            WHERE `id` = :news_id";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
-    ":news_id" => $news_id,
-    ":lang_id" => $lang_id
+    ":news_id" => $news_id
   ));
-  return $sth->fetchAll();
+  return $sth->fetch();
 }
 
-function get_news_main_image($conn, $news_id) {
+function get_news_image($conn, $news_id)
+{
   $sql = "SELECT 
-              `news_image_link`,
+              `news_image_link`, 
               `news_image_alt_text`
             FROM `news_image`
             WHERE `news_id` = :news_id
@@ -322,4 +288,83 @@ function get_news_main_image($conn, $news_id) {
     ":news_id" => $news_id
   ));
   return $sth->fetch();
+}
+
+function get_news_link($conn, $news_id, $lang_id)
+{
+  $sql = "SELECT `news_link`
+            FROM `news_link`
+            WHERE `news_id` = :news_id
+              AND `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":news_id" => $news_id,
+    ":lang_id" => $lang_id
+  ));
+  $result = $sth->fetch();
+  return $result["news_link"];
+}
+
+function get_news_text($conn, $news_id, $lang_id)
+{
+  $sql = "SELECT `news_text`
+            FROM `news_text`
+            WHERE `news_id` = :news_id
+              AND `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":news_id" => $news_id,
+    ":lang_id" => $lang_id
+  ));
+  $result = $sth->fetch();
+  return $result["news_text"];
+}
+
+function get_news_title($conn, $news_id, $lang_id)
+{
+  $sql = "SELECT `news_title`
+            FROM `news_title`
+            WHERE `news_id` = :news_id
+              AND `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":news_id" => $news_id,
+    ":lang_id" => $lang_id
+  ));
+  $result = $sth->fetch();
+  return $result["news_title"];
+}
+
+
+function get_news_list($conn, $lang_id) {
+  $news = get_news($conn);
+  foreach ($news as $key => $news_item) {
+    $news[$key]["image"] = get_news_image($conn, $news_item["id"]);
+    $news[$key]["link"] = get_news_link($conn, $news_item["id"], $lang_id);
+    $news[$key]["text"] = get_news_text($conn, $news_item["id"], $lang_id);
+    $news[$key]["title"] = get_news_title($conn, $news_item["id"], $lang_id);
+  }
+  return $news;
+}
+
+function get_news_item_by_id($conn, $news_id, $lang_id) {
+  $news_item = get_news_item($conn, $news_id);
+  $news_item["image"] = get_news_image($conn, $news_id);
+  $news_item["link"] = get_news_link($conn, $news_id, $lang_id);
+  $news_item["text"] = get_news_text($conn, $news_id, $lang_id);
+  $news_item["title"] = get_news_title($conn, $news_id, $lang_id);
+  return $news_item;
+}
+
+function get_news_image_list($conn, $news_id)
+{
+  $sql = "SELECT `news_image_link`
+            FROM `news_image`
+            WHERE `news_id` = :news_id
+              AND `main` = '0'";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":news_id" => $news_id
+  ));
+  return $sth->fetchAll();
 }

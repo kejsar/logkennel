@@ -4,10 +4,9 @@
 
 if (isset($_POST["action"]) && $_POST["action"] === "add") {
 
-  $dog_added = false;
+  $news_added = false;
   $link = "";
   $img_upload_error = "";
-  $main = "1";
 
   if (isset($_FILES["imageinput"])) {
 
@@ -19,33 +18,40 @@ if (isset($_POST["action"]) && $_POST["action"] === "add") {
     $file_size = $_FILES["imageinput"]["size"];
     $file_error_msg = $_FILES["imageinput"]["error"];
 
-    $link = date_timestamp_get(date_create());
-    $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg);
+    $img_link = date_timestamp_get(date_create());
+    $img_upload_error = upload_image($img_link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "news");
 
   }
 
-  if ($link && !$img_upload_error) {
-    $name        = isset($_POST["name"]) ? $_POST["name"] : "";
-    $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
-    $for_sale    = isset($_POST["for_sale"]) && $_POST["for_sale"] === "on" ? 1 : 0;
-    $gender_type = isset($_POST["gender_type"]) ? $_POST["gender_type"] : "";
-    $info        = isset($_POST["info"]) ? $_POST["info"] : "";
-    $alt         = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
+  $alt   = isset($_POST["news_img_alt"]) ? $_POST["news_img_alt"] : "";
+  $title = isset($_POST["news_title"]) ? $_POST["news_title"] : "";
+  $text  = isset($_POST["news_text"]) ? $_POST["news_text"] : "";
+  $news_link = get_link($title);
+  $main = "1";
 
-    $dog_id = add_dog($conn, $birth, $gender_type, $for_sale, $info);
+  $date = new DateTime();
+  $news_year  = $date->format("Y");
+  $news_month = $date->format("m");
+  $news_day   = $date->format("d");
 
-    if ($dog_id) {
-      $dog_name_added = add_dog_name($conn, $dog_id, $name, LANG);
-      $dog_image_added = add_dog_image($conn, $dog_id, $link, $alt, $main);
+  $news_id = add_news($conn, $news_year, $news_month, $news_day);
+
+  if ($news_id) {
+    if ($img_link && !$img_upload_error) {
+      $news_image_added  = add_news_image($conn, $news_id, $img_link, $alt, $main);
     }
+    $news_link_added   = add_news_link($conn, $news_id, $news_link, LANG);
+    $news_text_added   = add_news_text($conn, $news_id, $text, LANG);
+    $news_title_added  = add_news_title($conn, $news_id, $title, LANG);
+  }
 
-    if (   $dog_id
-        && $dog_name_added
-        && $dog_image_added
-    ) {
-      $dog_added = true;
-      reload_page();
-    }
+  if (   $news_id
+      && $news_link_added
+      && $news_text_added
+      && $news_title_added
+  ) {
+    $news_added = true;
+    reload_page();
   }
 
 }
@@ -63,7 +69,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
   $alt         = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
 
   $dog_updated = false;
-  $link = "";
+  $img_link = "";
   $img_upload_error = "";
   $dog_image_updated = 1;
 
@@ -79,8 +85,8 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
     
     $old_image = isset($_POST["old_image"]) ? $_POST["old_image"] : "";
 
-    $link = date_timestamp_get(date_create());
-    $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg);
+    $img_link = date_timestamp_get(date_create());
+    $img_upload_error = upload_image($img_link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "news");
 
   }
 
@@ -90,11 +96,11 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
 
     $dog_name_updated = update_dog_name($conn, $dog_id, $dog_name, LANG);
 
-    if ($link && !$img_upload_error) {
+    if ($img_link && !$img_upload_error) {
       if ($old_image) {
-        $dog_image_updated = update_dog_image($conn, $dog_id, $link);
+        $dog_image_updated = update_dog_image($conn, $dog_id, $img_link);
       } else {
-        $dog_image_updated = add_dog_image($conn, $dog_id, $link, $alt, '1');
+        $dog_image_updated = add_dog_image($conn, $dog_id, $img_link, $alt, '1');
       }
       $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . $old_image . ".jpg";
       $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . "thumbs" . DS . $old_image . ".jpg";
@@ -141,7 +147,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "delete") {
 if (isset($_POST["action"]) && $_POST["action"] === "add_image") {
 
   $dog_id = isset($_POST["id"]) ? $_POST["id"] : "";
-  $link = "";
+  $img_link = "";
   $img_upload_error = "";
   $alt = "";
   $main = "0";
@@ -160,8 +166,8 @@ if (isset($_POST["action"]) && $_POST["action"] === "add_image") {
       $file_error_msg = $_FILES["imageinput"]["error"][$i];
   
       if ($file_name !== "") {
-        $link = date_timestamp_get(date_create()) . $i;
-        $img_upload_error = upload_image($link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg);
+        $img_link = date_timestamp_get(date_create()) . $i;
+        $img_upload_error = upload_image($img_link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "news");
       
         if (!$img_upload_error && $dog_id) {
           $dog_image_added = add_dog_image($conn, $dog_id, $link, $alt, $main);

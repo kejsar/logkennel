@@ -1,3 +1,5 @@
 /public/img/dogs/*.jpg
 /public/img/dogs/thumbs/*.jpg
+/public/img/news/*.jpg
+/public/img/news/thumbs/*.jpg
 /.vscode

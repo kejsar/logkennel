@@ -143,17 +143,17 @@ function add_news($conn, $news_year, $news_month, $news_day)
   return $result ? $conn->lastInsertId() : false;
 }
 
-function add_news_image($conn, $news_id, $news_image_link, $news_image_alt, $main)
+function add_news_image($conn, $news_id, $news_image_link, $news_image_alt_text, $main)
 {
   $sql = "INSERT INTO `news_image` 
-              (`id`, `news_id`, `news_image_link`, `news_image_alt`, `main`) 
+              (`id`, `news_id`, `news_image_link`, `news_image_alt_text`, `main`) 
             VALUES 
-              (NULL, :news_id, :news_image_link, :news_image_alt, :main)";
+              (NULL, :news_id, :news_image_link, :news_image_alt_text, :main)";
   $sth = $conn->prepare($sql);
   $result = $sth->execute(array(
     ":news_id" => $news_id,
     ":news_image_link" => $news_image_link,
-    ":news_image_alt" => $news_image_alt,
+    ":news_image_alt_text" => $news_image_alt_text,
     ":main" => $main
   ));
   return $result ? $conn->lastInsertId() : false;
