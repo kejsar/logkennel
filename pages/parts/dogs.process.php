@@ -190,6 +190,10 @@ if (isset($_POST["action"]) && $_POST["action"] === "delete_image") {
   $delete_link = isset($_POST["delete_link"]) ? $_POST["delete_link"] : "";
   if ($delete_link) {
     delete_dog_image($conn, $delete_link);
+    $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . $delete_link . ".jpg";
+    $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . "thumbs" . DS . $delete_link . ".jpg";
+    if (file_exists($old_img_link)) unlink($old_img_link);
+    if (file_exists($old_thmb_link)) unlink($old_thmb_link);
     reload_page();
   }
 

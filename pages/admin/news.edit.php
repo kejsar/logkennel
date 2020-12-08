@@ -3,7 +3,8 @@
 $news_item = get_news_item_by_id($conn, SUBSUBPAGE, LANG);
 $image_list = get_news_image_list($conn, $news_item["id"]);
 $img_url = SITE . "public/img/news/" . $news_item["image"]["news_image_link"] . ".jpg";
-
+$date_obj = DateTime::createFromFormat('Y-m-d', $news_item["news_year"] . "-" . $news_item["news_month"] . "-" . $news_item["news_day"]);
+$date = $date_obj->format('Y-m-d');
 ?>
 
 <section class="news-edit">
@@ -67,19 +68,22 @@ $img_url = SITE . "public/img/news/" . $news_item["image"]["news_image_link"] . 
             
               <div class="form-group row">
                 <div class="col">
-                  <input type="text" class="form-control" name="name" value="<?=$news_item["title"]?>" required>
+                  <input type="text" class="form-control" name="title" value="<?=$news_item["title"]?>" required>
                 </div>
               </div>
 
               <div class="form-group row">
-                <div class="col">
+                <div class="col-7 col-xl-8">
                   <input type="text" class="form-control" name="link" value="<?=$news_item["link"]?>">
                 </div>
+                <div class="col-5 col-xl-4">
+                  <input type="date" class="form-control" name="date" value="<?=$date?>">
+                </div>
               </div>
 
               <div class="form-group row">
                 <div class="col">
-                  <textarea name="info"><?=$news_item["text"]?></textarea>
+                  <textarea name="text"><?=$news_item["text"]?></textarea>
                 </div>
               </div>
 

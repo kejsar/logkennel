@@ -25,13 +25,17 @@ foreach ($news_list as $news_item) {
 
   $edit_url = SITE . "admin/news/edit/" . $news_item["id"];
   $img_url = SITE . "public/img/news/thumbs/" . $news_item["image"]["news_image_link"] . ".jpg";
+  
+  $date_obj = DateTime::createFromFormat('Y-m-d', $news_item["news_year"] . "-" . $news_item["news_month"] . "-" . $news_item["news_day"]);
+  $date = $date_obj->format('Y-m-d');
 
   echo "<tr>";
   echo "  <td rowspan=\"4\"><a href=\"" . $edit_url . "\"><div style=\"background-image: url(" . $img_url . ")\" class=\"img-thumbnail\"></div></a></td>";
   echo "  <td><h5>" . $news_item["title"] . "</h5></td>";
   echo "</tr>";
   echo "<tr>";
-  echo "  <td colspan=\"2\">" . $news_item["link"] . "</td>";
+  echo "  <td>" . $news_item["link"] . "</td>";
+  echo "  <td>" . $date . "</td>";
   echo "</tr>";
   echo "<tr>";
   echo "  <td colspan=\"2\">" . $news_item["text"] . "</td>";

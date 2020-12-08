@@ -56,22 +56,26 @@ if (isset($_POST["action"]) && $_POST["action"] === "add") {
 
 }
 
-// EDIT CURRENT DOG ===========================================================
+// EDIT CURRENT NEWS ==========================================================
 
 if (isset($_POST["action"]) && $_POST["action"] === "edit") {
 
-  $dog_id      = $_POST["id"];
-  $dog_name    = isset($_POST["name"]) ? $_POST["name"] : "";
-  $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
-  $for_sale    = isset($_POST["for_sale"]) && $_POST["for_sale"] === "on" ? 1 : 0;
-  $gender_type = isset($_POST["gender_type"]) ? $_POST["gender_type"] : "";
-  $info        = isset($_POST["info"]) ? $_POST["info"] : "";
-  $alt         = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
+  $news_id = $_POST["id"];
+  $title = isset($_POST["title"]) ? $_POST["title"] : "";
+  $link = isset($_POST["link"]) ? $_POST["link"] : "";
+  $text = isset($_POST["text"]) ? $_POST["text"] : "";
+  $alt = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
+  
+  $post_date = isset($_POST["date"]) ? $_POST["date"] : "";
+  $date_obj = DateTime::createFromFormat('Y-m-d', $post_date);
+  $news_year = $date_obj->format('Y');
+  $news_month = $date_obj->format('m');
+  $news_day = $date_obj->format('d');
 
-  $dog_updated = false;
+  $news_updated = false;
   $img_link = "";
   $img_upload_error = "";
-  $dog_image_updated = 1;
+  $news_image_updated = "";
 
   if (isset($_FILES["imageinput"]["tmp_name"]) && $_FILES["imageinput"]["tmp_name"] !== "") {
 
@@ -90,54 +94,53 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
 
   }
 
-  $raw_dog_info_updated = update_dog($conn, $birth, $for_sale, $info, $gender_type, $dog_id);
+  $raw_news_info_updated = update_news($conn, $news_id, $news_year, $news_month, $news_day);
+  $raw_news_info_updated = update_news_link($conn, $news_id, $link, LANG);
+  $raw_news_info_updated = update_news_text($conn, $news_id, $text, LANG);
+  $raw_news_info_updated = update_news_title($conn, $news_id, $title, LANG);
 
-  if ($raw_dog_info_updated) {
+  if ($raw_news_info_updated) {
 
-    $dog_name_updated = update_dog_name($conn, $dog_id, $dog_name, LANG);
 
     if ($img_link && !$img_upload_error) {
       if ($old_image) {
-        $dog_image_updated = update_dog_image($conn, $dog_id, $img_link);
+        $news_image_updated = update_news_image($conn, $news_id, $img_link, $alt, '1');
       } else {
-        $dog_image_updated = add_dog_image($conn, $dog_id, $img_link, $alt, '1');
+        $news_image_updated = add_news_image($conn, $news_id, $img_link, $alt, '1');
       }
-      $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . $old_image . ".jpg";
-      $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . "thumbs" . DS . $old_image . ".jpg";
+      $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . $old_image . ".jpg";
+      $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . "thumbs" . DS . $old_image . ".jpg";
       if (file_exists($old_img_link)) unlink($old_img_link);
       if (file_exists($old_thmb_link)) unlink($old_thmb_link);
     }
 
-    update_dog_image_alt_text($conn, $dog_id, $alt);
+    update_news_image_alt_text($conn, $news_id, $alt);
 
   }
 
-  if (   $raw_dog_info_updated
-    && $dog_name_updated
-    && $dog_image_updated
-  ) {
-    $dog_updated = true;
+  if ($raw_news_info_updated && $news_image_updated) {
+    $news_updated = true;
     reload_page();
   }
 
 }
 
-// DELETE CURRENT DOG =========================================================
+// DELETE CURRENT NEWS =========================================================
 
 if (isset($_POST["action"]) && $_POST["action"] === "delete") {
 
-  $dog_delete_id = isset($_POST["delete_id"]) ? $_POST["delete_id"] : "";
+  $news_delete_id = isset($_POST["delete_id"]) ? $_POST["delete_id"] : "";
 
-  $dog_images = get_all_dog_images($conn, $dog_delete_id);
+  $news_images = get_all_news_images($conn, $news_delete_id);
 
-  foreach ($dog_images as $image) {
-    $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . $image["dog_image_link"] . ".jpg";
-    $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "dogs" . DS . "thumbs" . DS . $image["dog_image_link"] . ".jpg";
+  foreach ($news_images as $image) {
+    $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . $image["news_image_link"] . ".jpg";
+    $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . "thumbs" . DS . $image["news_image_link"] . ".jpg";
     if (file_exists($old_img_link)) unlink($old_img_link);
     if (file_exists($old_thmb_link)) unlink($old_thmb_link);
   }
 
-  delete_dog_by_dog_id($conn, $dog_delete_id);
+  delete_news_by_news_id($conn, $news_delete_id);
   reload_page();
 
 }
@@ -146,7 +149,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "delete") {
 
 if (isset($_POST["action"]) && $_POST["action"] === "add_image") {
 
-  $dog_id = isset($_POST["id"]) ? $_POST["id"] : "";
+  $news_id = isset($_POST["id"]) ? $_POST["id"] : "";
   $img_link = "";
   $img_upload_error = "";
   $alt = "";
@@ -169,8 +172,8 @@ if (isset($_POST["action"]) && $_POST["action"] === "add_image") {
         $img_link = date_timestamp_get(date_create()) . $i;
         $img_upload_error = upload_image($img_link, $file_name, $file_tmp_loc, $file_type, $file_size, $file_error_msg, "news");
       
-        if (!$img_upload_error && $dog_id) {
-          $dog_image_added = add_dog_image($conn, $dog_id, $link, $alt, $main);
+        if (!$img_upload_error && $news_id) {
+          $news_image_added = add_news_image($conn, $news_id, $img_link, $alt, $main);
         }
       }
 
@@ -195,7 +198,11 @@ if (isset($_POST["action"]) && $_POST["action"] === "delete_image") {
 
   $delete_link = isset($_POST["delete_link"]) ? $_POST["delete_link"] : "";
   if ($delete_link) {
-    delete_dog_image($conn, $delete_link);
+    delete_news_image($conn, $delete_link);
+    $old_img_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . $delete_link . ".jpg";
+    $old_thmb_link = ROOT_DIR . "public" . DS . "img" . DS . "news" . DS . "thumbs" . DS . $delete_link . ".jpg";
+    if (file_exists($old_img_link)) unlink($old_img_link);
+    if (file_exists($old_thmb_link)) unlink($old_thmb_link);
     reload_page();
   }
 

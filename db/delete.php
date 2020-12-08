@@ -39,11 +39,20 @@ function delete_dog_image($conn, $dog_image_link) {
 // DELETE NEWS
 // ============================================================================
 
-function delete_news($conn, $news_id) {
+function delete_news_by_news_id($conn, $news_id) {
   $sql = "DELETE FROM `news` 
             WHERE `id` = :news_id";
   $sth = $conn->prepare($sql);
   return $sth->execute(array(
     ":news_id" => $news_id
+  ));
+}
+
+function delete_news_image($conn, $news_image_link) {
+  $sql = "DELETE FROM `news_image`
+            WHERE `news_image_link` = :news_image_link";
+  $sth = $conn->prepare($sql);
+  return $sth->execute(array(
+    ":news_image_link" => $news_image_link
   ));
 }

@@ -368,3 +368,15 @@ function get_news_image_list($conn, $news_id)
   ));
   return $sth->fetchAll();
 }
+
+function get_all_news_images($conn, $news_id)
+{
+  $sql = "SELECT `news_image_link`
+            FROM `news_image`
+            WHERE `news_id` = :news_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":news_id" => $news_id
+  ));
+  return $sth->fetchAll();
+}

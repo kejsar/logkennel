@@ -141,6 +141,18 @@ function update_news_image($conn, $news_id, $news_image_link, $news_image_alt_te
   ));
 }
 
+function update_news_image_alt_text($conn, $news_id, $news_image_alt_text)
+{
+  $sql = "UPDATE `news_image` SET
+              `news_image_alt_text` = :news_image_alt_text
+            WHERE `news_id` = :news_id";
+  $sth = $conn->prepare($sql);
+  return $sth->execute(array(
+    ":news_image_alt_text" => $news_image_alt_text,
+    ":news_id" => $news_id
+  ));
+}
+
 function update_news_link($conn, $news_id, $news_link, $lang_id)
 {
   $sql = "UPDATE `news_link` SET
