@@ -8,7 +8,7 @@
 
         <form action="<?=SITE?>admin/dogs" method="post" enctype="multipart/form-data">
 
-          <input type="hidden" name="page" value="dog">
+          <input type="hidden" name="page" value="dogs">
           <input type="hidden" name="action" value="add">
 
           <div class="row">
@@ -17,7 +17,7 @@
 
               <div class="form-group">
                 <div class="card">
-                  <img src="<?=SITE?>public/img/site/dog.jpg" alt="<?=$dog["dog_image_alt_text"]?>" class="card-img-top" id="card-img-top">
+                  <img src="<?=SITE?>public/img/site/dog.jpg" class="card-img-top" id="card-img-top">
                 </div>
               </div>
             

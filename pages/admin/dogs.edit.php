@@ -15,7 +15,7 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
         <h1>Редактировать собачку: <?=$dog["dog_name"]?></h1>
         
         <form action="<?=SITE?>admin/dogs" method="post" enctype="multipart/form-data" id="delete-form">
-          <input type="hidden" name="page" value="dog">
+          <input type="hidden" name="page" value="dogs">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="delete_id" value="<?=$dog["id"]?>">
           <div class="row">
@@ -29,7 +29,7 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
 
         <form action="<?=SITE?>admin/dogs" method="post" enctype="multipart/form-data">
 
-          <input type="hidden" name="page" value="dog">
+          <input type="hidden" name="page" value="dogs">
           <input type="hidden" name="action" value="edit">
           <input type="hidden" name="id" value="<?=$dog["id"]?>">
 
@@ -140,7 +140,7 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
 
         <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-10">
 
-          <input type="hidden" name="page" value="dog">
+          <input type="hidden" name="page" value="dogs">
           <input type="hidden" name="action" value="add_image">
           <input type="hidden" name="id" value="<?=$dog["id"]?>">
 
@@ -159,7 +159,7 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
         <?php $img_url = SITE . "public/img/dogs/thumbs/" . $image["dog_image_link"] . ".jpg"; ?>
         <div style="background-image: url(<?=$img_url?>)" class="img-thumbnail galery-image-edit">
           <form action="<?=SITE?>admin/dogs/edit/<?=$dog["id"]?>" method="post">
-            <input type="hidden" name="page" value="dog">
+            <input type="hidden" name="page" value="dogs">
             <input type="hidden" name="action" value="delete_image">
             <input type="hidden" name="delete_link" value="<?=$image["dog_image_link"]?>">
             <button type="submit" class="btn btn-danger delete-image-button"><i class="fas fa-times"></i> Delete</button>

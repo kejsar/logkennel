@@ -263,15 +263,15 @@ function get_news_items($conn, $lang_id) {
               `news`.`news_month`,
               `news`.`news_day`,
               `news_image`.`news_image_link`,
-              `news_image`.`news_image_alt`,
+              `news_image`.`news_image_alt_text`,
               `news_link`.`news_link`,
               `news_text`.`news_text`,
               `news_title`.`news_title`
             FROM `news`
             INNER JOIN `news_image` ON `news`.`id` = `news_image`.`news_id`
-            INNER JOIN `news_link` ON `menu`.`id` = `news_link`.`news_id`
-            INNER JOIN `news_text` ON `menu`.`id` = `news_text`.`news_id`
-            INNER JOIN `news_title` ON `menu`.`id` = `news_title`.`news_id`
+            INNER JOIN `news_link` ON `news`.`id` = `news_link`.`news_id`
+            INNER JOIN `news_text` ON `news`.`id` = `news_text`.`news_id`
+            INNER JOIN `news_title` ON `news`.`id` = `news_title`.`news_id`
             WHERE `news_link`.`lang_id` = :lang_id
               AND `news_text`.`lang_id` = :lang_id
               AND `news_title`.`lang_id` = :lang_id";
@@ -308,4 +308,18 @@ function get_news_item_by_id($conn, $news_id, $lang_id) {
     ":lang_id" => $lang_id
   ));
   return $sth->fetchAll();
+}
+
+function get_news_main_image($conn, $news_id) {
+  $sql = "SELECT 
+              `news_image_link`,
+              `news_image_alt_text`
+            FROM `news_image`
+            WHERE `news_id` = :news_id
+              AND `main` = '1'";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":news_id" => $news_id
+  ));
+  return $sth->fetch();
 }
