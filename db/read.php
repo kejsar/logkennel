@@ -4,25 +4,22 @@
 // READ BLOCK
 // ============================================================================
 
-function get_block($conn, $block_name, $lang_id) {
-  $sql = "SELECT
-              `block_title`.`block_title`,
-              `block_text`.`block_text`,
-              `block_image`.`block_image_link`,
-              `block_image`.`block_image_alt_text`
-            FROM `block` 
-            INNER JOIN `block_title` ON `block`.`id` = `block_title`.`block_id`
-            INNER JOIN `block_text` ON `block`.`id` = `block_text`.`block_id`
-            INNER JOIN `block_image` ON `block`.`id` = `block_image`.`block_id`
-            WHERE `block`.`block_name` = :block_name
-              AND `block_title`.`lang_id` = :lang_id
-              AND `block_text`.`lang_id` = :lang_id";
+function get_block_list($conn) {
+  $sql = "SELECT * FROM `block`";
+  $sth = $conn->prepare($sql);
+  $sth->execute();
+  return $sth->fetchAll();
+}
+
+function get_block_id($conn, $block_name) {
+  $sql = "SELECT `id` FROM `block`
+            WHERE `block_name` = :block_name";
   $sth = $conn->prepare($sql);
   $sth->execute(array(
-    ":block_name" => $block_name,
-    ":lang_id" => $lang_id
+    ":block_name" => $block_name
   ));
-  return $sth->fetch();
+  $result = $sth->fetch();
+  return $result["id"];
 }
 
 function get_block_image($conn, $block_id) {
@@ -62,6 +59,25 @@ function get_block_text($conn, $block_id, $lang_id) {
   ));
   $result = $sth->fetch();
   return $result["block_text"];
+}
+
+function get_blocks($conn, $lang_id) {
+  $block_list = get_block_list($conn);
+  foreach ($block_list as $key => $block) {
+    $blocks[$block["block_name"]]["id"] = $block["id"];
+    $blocks[$block["block_name"]]["image"] = get_block_image($conn, $block["id"]);
+    $blocks[$block["block_name"]]["text"] = get_block_text($conn, $block["id"], $lang_id);
+    $blocks[$block["block_name"]]["title"] = get_block_title($conn, $block["id"], $lang_id);
+  }
+  return $blocks;
+}
+
+function get_block($conn, $block_name, $lang_id) {
+  $block_id = get_block_id($conn, $block_name);
+  $block["image"] = get_block_image($conn, $block_id);
+  $block["text"] = get_block_text($conn, $block_id, $lang_id);
+  $block["title"] = get_block_title($conn, $block_id, $lang_id);
+  return $block;
 }
 
 // ============================================================================
@@ -379,4 +395,38 @@ function get_all_news_images($conn, $news_id)
     ":news_id" => $news_id
   ));
   return $sth->fetchAll();
+}
+
+// ============================================================================
+// READ SETTINGS
+// ============================================================================
+
+function get_settings_list($conn) {
+  $sql = "SELECT * FROM `settings`";
+  $sth = $conn->prepare($sql);
+  $sth->execute();
+  return $sth->fetchAll();
+}
+
+function get_settings_text($conn, $settings_id, $lang_id) {
+  $sql = "SELECT `settings_text`
+            FROM `settings_text`
+            WHERE `settings_id` = :settings_id 
+              AND `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":settings_id" => $settings_id,
+    ":lang_id" => $lang_id
+  ));
+  $result = $sth->fetch();
+  return $result["settings_text"];
+}
+
+function get_settings($conn, $lang_id) {
+  $settings_list = get_settings_list($conn);
+  foreach ($settings_list as $key => $settings) {
+    $result[$settings["settings_name"]]["id"] = $settings["id"];
+    $result[$settings["settings_name"]]["text"] = get_settings_text($conn, $settings["id"], $lang_id);
+  }
+  return $result;
 }

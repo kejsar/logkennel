@@ -22,6 +22,8 @@ require DB_DIR . "read.php";
 require PARTS_DIR . "auth.php";
 require PARTS_DIR . "init.php";
 
+$settings = get_settings($conn, LANG);
+
 if (IS_ADMIN) {
   require DB_DIR . "create.php";
   require DB_DIR . "update.php";

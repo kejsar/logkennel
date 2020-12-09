@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2020 at 01:04 AM
+-- Generation Time: Dec 09, 2020 at 03:04 PM
 -- Server version: 10.3.22-MariaDB
 -- PHP Version: 7.1.33
 
@@ -20,6 +20,15 @@ SET time_zone = "+00:00";
 --
 -- Database: `logkennel`
 --
+
+--
+-- Dumping data for table `lang`
+--
+
+INSERT INTO `lang` (`id`, `lang_code`, `lang_name`) VALUES
+(1, 'ru', 'русский'),
+(2, 'en', 'english'),
+(3, 'uk', 'український');
 
 --
 -- Dumping data for table `admin_menu`
@@ -43,13 +52,38 @@ INSERT INTO `admin_menu_title` (`id`, `admin_menu_id`, `admin_menu_title`, `lang
 (6, 3, 'Blocks', 2);
 
 --
--- Dumping data for table `dog`
+-- Dumping data for table `block`
 --
 
-INSERT INTO `dog` (`id`, `dog_birth`, `gender_type`, `for_sale`, `dog_info`) VALUES
-(10, '2020-12-01', 1, 1, '<p>asdf asdf asdf asdf a</p>\r\n<p>sd fa</p>\r\n<p>sdf asdfasdf asdf asdf</p>'),
-(11, '2020-12-02', 0, 1, '<p>asdfasd fasdf asdf</p>'),
-(12, '2020-12-03', 1, 0, '<p>asdfasdf</p>');
+INSERT INTO `block` (`id`, `block_name`) VALUES
+(3, 'contacts_text'),
+(2, 'footer_text'),
+(1, 'greetings');
+
+--
+-- Dumping data for table `block_image`
+--
+
+INSERT INTO `block_image` (`id`, `block_id`, `block_image_link`, `block_image_alt_text`) VALUES
+(1, 1, 'about-us', 'about-us about-us');
+
+--
+-- Dumping data for table `block_text`
+--
+
+INSERT INTO `block_text` (`id`, `block_id`, `block_text`, `lang_id`) VALUES
+(1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 1),
+(2, 2, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 1),
+(3, 3, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 1);
+
+--
+-- Dumping data for table `block_title`
+--
+
+INSERT INTO `block_title` (`id`, `block_id`, `block_title`, `lang_id`) VALUES
+(1, 1, 'About us', 1),
+(2, 2, '', 1),
+(3, 3, 'You are welcome', 1);
 
 --
 -- Dumping data for table `dog_gender`
@@ -62,6 +96,15 @@ INSERT INTO `dog_gender` (`id`, `gender_name`, `gender_type`, `lang_id`) VALUES
 (4, 'female', 0, 2),
 (5, 'хлопчик', 1, 3),
 (6, 'дівчинка', 0, 3);
+
+--
+-- Dumping data for table `dog`
+--
+
+INSERT INTO `dog` (`id`, `dog_birth`, `gender_type`, `for_sale`, `dog_info`) VALUES
+(10, '2020-12-01', 1, 1, '<p>asdf asdf asdf asdf a</p>\r\n<p>sd fa</p>\r\n<p>sdf asdfasdf asdf asdf</p>'),
+(11, '2020-12-02', 0, 1, '<p>asdfasd fasdf asdf</p>'),
+(12, '2020-12-03', 1, 0, '<p>asdfasdf</p>');
 
 --
 -- Dumping data for table `dog_image`
@@ -90,15 +133,6 @@ INSERT INTO `dog_name` (`id`, `dog_id`, `dog_name`, `lang_id`) VALUES
 (10, 10, 'asdf asdfwe ew', 1),
 (11, 11, 'asdfasdf', 1),
 (12, 12, 'asdfgasdgdfg', 1);
-
---
--- Dumping data for table `lang`
---
-
-INSERT INTO `lang` (`id`, `lang_code`, `lang_name`) VALUES
-(1, 'ru', 'русский'),
-(2, 'en', 'english'),
-(3, 'uk', 'український');
 
 --
 -- Dumping data for table `menu`
