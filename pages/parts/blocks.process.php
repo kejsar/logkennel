@@ -4,13 +4,10 @@
 
 if (isset($_POST["action"]) && $_POST["action"] === "edit") {
 
-  $block_id      = $_POST["id"];
-  $block_name    = isset($_POST["name"]) ? $_POST["name"] : "";
-  $birth       = isset($_POST["birth"]) ? $_POST["birth"] : "";
-  $for_sale    = isset($_POST["for_sale"]) && $_POST["for_sale"] === "on" ? 1 : 0;
-  $gender_type = isset($_POST["gender_type"]) ? $_POST["gender_type"] : "";
-  $info        = isset($_POST["info"]) ? $_POST["info"] : "";
-  $alt         = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
+  $block_id = $_POST["block_id"];
+  $block_title = isset($_POST["title"]) ? $_POST["title"] : "";
+  $block_text = isset($_POST["text"]) ? $_POST["text"] : "";
+  $alt = isset($_POST["img_alt"]) ? $_POST["img_alt"] : "";
 
   $block_updated = false;
   $link = "";
@@ -34,11 +31,9 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
 
   }
 
-  $raw_block_info_updated = update_block($conn, $birth, $for_sale, $info, $gender_type, $block_id);
+  $raw_block_info_updated = update_block($conn, $block_title, $block_text, $block_id, LANG);
 
   if ($raw_block_info_updated) {
-
-    $block_name_updated = update_block_name($conn, $block_id, $block_name, LANG);
 
     if ($link && !$img_upload_error) {
       if ($old_image) {
@@ -56,10 +51,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "edit") {
 
   }
 
-  if (   $raw_block_info_updated
-    && $block_name_updated
-    && $block_image_updated
-  ) {
+  if ($raw_block_info_updated) {
     $block_updated = true;
     reload_page();
   }

@@ -7,7 +7,13 @@ $img_url = SITE . "public/img/blocks/thumbs/" . $blocks["greetings"]["image"]["b
 ?>
 
 <section class="blocks">
-  <div class="container">
+  <div class="container-md">
+
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col">
@@ -16,56 +22,61 @@ $img_url = SITE . "public/img/blocks/thumbs/" . $blocks["greetings"]["image"]["b
           <div class="card">
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                   Приветствие
                 </button>
               </h2>
             </div>
 
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionKennel">
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionKennel">
               <div class="card-body">
 
-                <form method="post">
+                
+                <form action="<?=SITE?>admin/blocks" method="post" enctype="multipart/form-data">
                   <div class="row">
 
-                      <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
+                    <div class="col-12 col-sm-5 col-md-4 col-lg-4 col-xl-3">
 
-                        <input type="hidden" name="old_image" value="<?=$blocks["greetings"]["image"]["block_image_link"]?>">
+                      <input type="hidden" name="page" value="blocks">
+                      <input type="hidden" name="action" value="edit">
+                      <input type="hidden" name="block_id" value="<?=$blocks["greetings"]["id"]?>">
 
-                        <div class="form-group">
-                          <div class="card">
-                            <img src="<?=$img_url?>" alt="<?=$blocks["greetings"]["image"]["block_image_alt_text"]?>" class="card-img-top" id="card-img-top">
-                          </div>
+                      <input type="hidden" name="old_image" value="<?=$blocks["greetings"]["image"]["block_image_link"]?>">
+
+                      <div class="form-group">
+                        <div class="card">
+                          <img src="<?=$img_url?>" alt="<?=$blocks["greetings"]["image"]["block_image_alt_text"]?>" class="card-img-top" id="card-img-top">
                         </div>
-
-                        <div class="form-group row">
-                          <div class="col">
-                            <input type="text" class="form-control" name="img_alt" value="<?=$blocks["greetings"]["image"]["block_image_alt_text"]?>" required>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <div class="input-group">
-                            <div class="custom-file">
-                              <input type="file" class="custom-file-input" name="imageinput" id="imageinput">
-                              <label for="imageinput" class="custom-file-label">
-                                Choose file
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
                       </div>
 
-                      <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8">
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="greetings_title" value="<?=$blocks["greetings"]["title"]?>">
+                      <div class="form-group row">
+                        <div class="col">
+                          <input type="text" class="form-control" name="img_alt" value="<?=$blocks["greetings"]["image"]["block_image_alt_text"]?>" required>
                         </div>
-                        <div class="form-group">
-                          <textarea name="greetings_text"><?=$blocks["greetings"]["text"]?></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
                       </div>
+
+                      <div class="form-group">
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="imageinput" id="imageinput">
+                            <label for="imageinput" class="custom-file-label">
+                              Choose file
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="title" value="<?=$blocks["greetings"]["title"]?>">
+                      </div>
+                      <div class="form-group">
+                        <textarea name="text"><?=$blocks["greetings"]["text"]?></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    </div>
 
                   </div>
                 </form>
@@ -84,10 +95,15 @@ $img_url = SITE . "public/img/blocks/thumbs/" . $blocks["greetings"]["image"]["b
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionKennel">
               <div class="card-body">
 
-                <form method="post">
+                
+                <form action="<?=SITE?>admin/blocks" method="post" enctype="multipart/form-data">
+
+                  <input type="hidden" name="page" value="blocks">
+                  <input type="hidden" name="action" value="edit">
+                  <input type="hidden" name="block_id" value="<?=$blocks["footer_text"]["id"]?>">
                   
                   <div class="form-group">
-                    <textarea name="footer_text"><?=$blocks["footer_text"]["text"]?></textarea>
+                    <textarea name="text"><?=$blocks["footer_text"]["text"]?></textarea>
                   </div>
 
                   <button type="submit" class="btn btn-primary">Submit</button>
@@ -108,10 +124,15 @@ $img_url = SITE . "public/img/blocks/thumbs/" . $blocks["greetings"]["image"]["b
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionKennel">
               <div class="card-body">
 
-                <form method="post">
+                
+                <form action="<?=SITE?>admin/blocks" method="post" enctype="multipart/form-data">
+
+                  <input type="hidden" name="page" value="blocks">
+                  <input type="hidden" name="action" value="edit">
+                  <input type="hidden" name="block_id" value="<?=$blocks["contacts_text"]["id"]?>">
 
                   <div class="form-group">
-                    <textarea name="contacts_text"><?=$blocks["contacts_text"]["text"]?></textarea>
+                    <textarea name="text"><?=$blocks["contacts_text"]["text"]?></textarea>
                   </div>
 
                   <div class="form-group row">
@@ -154,5 +175,11 @@ $img_url = SITE . "public/img/blocks/thumbs/" . $blocks["greetings"]["image"]["b
       </div>
     </div>
 
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    
   </div>
 </section>

@@ -4,18 +4,6 @@
 // UPDATE BLOCK
 // ============================================================================
 
-function update_block($conn, $block_name, $block_id)
-{
-  $sql = "UPDATE `block` 
-            SET `block_name` = :block_name 
-            WHERE `id` = :block_id";
-  $sth = $conn->prepare($sql);
-  return $sth->execute(array(
-    ":block_name" => $block_name,
-    ":block_id"   => $block_id
-  ));
-}
-
 function update_block_title($conn, $block_title, $block_id, $lang_id)
 {
   $sql = "UPDATE `block_title` 
@@ -42,6 +30,25 @@ function update_block_text($conn, $block_text, $block_id, $lang_id)
     ":block_id"   => $block_id,
     ":lang_id"    => $lang_id
   ));
+}
+
+function update_block_image_alt_text($conn, $block_id, $block_image_alt_text)
+{
+  $sql = "UPDATE `block_image` SET
+              `block_image_alt_text` = :block_image_alt_text
+            WHERE `block_id` = :block_id";
+  $sth = $conn->prepare($sql);
+  return $sth->execute(array(
+    ":block_image_alt_text" => $block_image_alt_text,
+    ":block_id" => $block_id
+  ));
+}
+
+function update_block($conn, $block_title, $block_text, $block_id, $lang_id)
+{
+  $title_updated = update_block_title($conn, $block_title, $block_id, $lang_id);
+  $text_updated = update_block_text($conn, $block_text, $block_id, $lang_id);
+  return $title_updated && $text_updated;
 }
 
 // ============================================================================

@@ -31,6 +31,7 @@ if (IS_ADMIN) {
   if (isset($_POST["page"])) {
     if ($_POST["page"] === "dog") require PARTS_DIR . "dogs.process.php";
     if ($_POST["page"] === "news") require PARTS_DIR . "news.process.php";
+    if ($_POST["page"] === "blocks") require PARTS_DIR . "blocks.process.php";
   }
 }
 

@@ -38,6 +38,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "add") {
 
   if ($news_id) {
     if ($img_link && !$img_upload_error) {
+      if ($alt === "") $alt = $title;
       $news_image_added  = add_news_image($conn, $news_id, $img_link, $alt, $main);
     }
     $news_link_added   = add_news_link($conn, $news_id, $news_link, LANG);

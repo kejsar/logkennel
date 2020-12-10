@@ -32,7 +32,6 @@ img#card-img-top {
   border: 1px solid #dee2e6;
   border-radius: .25rem;
   width: auto;
-  min-width: 100px;
   height: 200px;
 
   display: flex;

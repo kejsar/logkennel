@@ -12,7 +12,24 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
     <div class="row">
       <div class="col">
 
-        <h1>Редактировать собачку: <?=$dog["dog_name"]?></h1>
+
+        <div class="row">
+          <div class="col">
+            <hr>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <h1>Редактировать собачку: <?=$dog["dog_name"]?></h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <hr>
+          </div>
+        </div>
         
         <form action="<?=SITE?>admin/dogs" method="post" enctype="multipart/form-data" id="delete-form">
           <input type="hidden" name="page" value="dogs">
@@ -112,7 +129,7 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
                 <div class="col">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <div class="col">
+                <div class="col text-right">
                   <a role="button" class="btn btn-danger" id="delete-confirm" data-dog-name="<?=$dog["dog_name"]?>"><i class="fas fa-times"></i> Delete</a>
                 </div>
               </div>
@@ -138,7 +155,7 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
           <h3>Галерея:</h3>
         </div>
 
-        <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-10">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-10 text-right">
 
           <input type="hidden" name="page" value="dogs">
           <input type="hidden" name="action" value="add_image">
@@ -152,18 +169,33 @@ $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg
       </div>
     </form>
 
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+
 <?php if ($dog_images !== "") : ?>
     <div class="row">
 <?php foreach ($dog_images as $image) : ?>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-        <?php $img_url = SITE . "public/img/dogs/thumbs/" . $image["dog_image_link"] . ".jpg"; ?>
-        <div style="background-image: url(<?=$img_url?>)" class="img-thumbnail galery-image-edit">
-          <form action="<?=SITE?>admin/dogs/edit/<?=$dog["id"]?>" method="post">
-            <input type="hidden" name="page" value="dogs">
-            <input type="hidden" name="action" value="delete_image">
-            <input type="hidden" name="delete_link" value="<?=$image["dog_image_link"]?>">
-            <button type="submit" class="btn btn-danger delete-image-button"><i class="fas fa-times"></i> Delete</button>
-          </form>
+        <div class="row">
+          <div class="col">
+            <?php $img_url = SITE . "public/img/dogs/thumbs/" . $image["dog_image_link"] . ".jpg"; ?>
+            <div style="background-image: url(<?=$img_url?>)" class="img-thumbnail galery-image-edit">
+              <form action="<?=SITE?>admin/dogs/edit/<?=$dog["id"]?>" method="post">
+                <input type="hidden" name="page" value="dogs">
+                <input type="hidden" name="action" value="delete_image">
+                <input type="hidden" name="delete_link" value="<?=$image["dog_image_link"]?>">
+                <button type="submit" class="btn btn-danger delete-image-button"><i class="fas fa-times"></i> Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <hr>
+          </div>
         </div>
       </div>
 <?php endforeach; ?>

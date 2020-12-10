@@ -23,7 +23,7 @@
             
               <div class="form-group row">
                 <div class="col">
-                  <input type="text" class="form-control" name="news_img_alt" placeholder="Сео-текст для изображения" required>
+                  <input type="text" class="form-control" name="news_img_alt" placeholder="Сео-текст для изображения">
                 </div>
               </div>
 
@@ -44,7 +44,7 @@
             
               <div class="form-group row">
                 <div class="col">
-                  <input type="text" class="form-control" name="news_title" placeholder="Заголовок" required>
+                  <input type="text" class="form-control" name="news_title" placeholder="Заголовок">
                 </div>
               </div>
 

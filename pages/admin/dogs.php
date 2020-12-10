@@ -13,7 +13,7 @@ foreach ($dogs as $key => $dog) {
 ?>
 
 <section class="dogs">
-  <div class="container">
+  <div class="container-lg">
     <div class="row">
       <div class="col">
 
@@ -36,35 +36,77 @@ foreach ($dogs as $key => $dog) {
         </div>
 <?php endif; ?>
 
-        <table class="table">
-          <tbody>
-<?php
-
-foreach ($dogs as $dog) {
+<?php foreach ($dogs as $dog) :
 
   $for_sale_icon = $dog["for_sale"] ? "$$$" : "";
   $edit_url = SITE . "admin/dogs/edit/" . $dog["id"];
   $img_url = SITE . "public/img/dogs/thumbs/" . $dog["images"]["dog_image_link"] . ".jpg";
 
-  echo "<tr>";
-  echo "  <td rowspan=\"3\"><a href=\"" . $edit_url . "\"><div style=\"background-image: url(" . $img_url . ")\" class=\"img-thumbnail\"></div></a></td>";
-  echo "  <td><h5>" . $dog["dog_name"] . "</h5></td>";
-  echo "  <td>" . $dog["dog_birth"] . "</td>";
-  echo "  <td>" . $dog["gender_name"] . "</td>";
-  echo "  <td>" . $for_sale_icon . "</td>";
-  echo "</tr>";
-  echo "<tr>";
-  echo "  <td colspan=\"4\">" . $dog["dog_info"] . "</td>";
-  echo "</tr>";
-  echo "<tr>";
-  echo "  <td colspan=\"4\"><a class=\"btn btn-outline-primary\" href=\"" . $edit_url . "\" role=\"button\"><i class=\"fas fa-edit\"></i> изменить</a></td>";
-  echo "</tr>";
-
-}
-
 ?>
-          </tbody>
-        </table>
+
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-2">
+            <div class="row">
+              <div class="col">
+                <hr>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <a href="<?=$edit_url?>"><div style="background-image: url(<?=$img_url?>)" class="img-thumbnail"></div></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-10">
+            <div class="row">
+              <div class="col">
+                <hr>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h5><?=$dog["dog_name"]?></h5>
+              </div>
+              <div class="col">
+                <a class="btn btn-outline-primary float-right" href="<?=$edit_url?>" role="button"><i class="fas fa-edit"></i> изменить</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <hr>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <?=$dog["dog_birth"]?>
+              </div>
+              <div class="col">
+                <?=$dog["gender_name"]?>
+              </div>
+              <div class="col">
+                <?=$for_sale_icon?>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <hr>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <?=$dog["dog_info"]?>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col">
+            <hr>
+          </div>
+        </div>
+
+<?php endforeach; ?>
 
       </div>
     </div>
