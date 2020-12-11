@@ -29,7 +29,7 @@ if (IS_ADMIN) {
   require DB_DIR . "update.php";
   require DB_DIR . "delete.php";
   if (isset($_POST["page"])) {
-    if ($_POST["page"] === "dog") require PARTS_DIR . "dogs.process.php";
+    if ($_POST["page"] === "dogs") require PARTS_DIR . "dogs.process.php";
     if ($_POST["page"] === "news") require PARTS_DIR . "news.process.php";
     if ($_POST["page"] === "blocks") require PARTS_DIR . "blocks.process.php";
   }

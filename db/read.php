@@ -261,6 +261,41 @@ function get_menu($conn, $lang_id)
   return $sth->fetchAll();
 }
 
+function get_page_id($conn, $menu_link)
+{
+  $sql = "SELECT `id`
+            FROM `menu`
+            WHERE `menu_link` = :menu_link";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":menu_link" => $menu_link
+  ));
+  $result = $sth->fetch();
+  return $result["id"];
+}
+
+function get_page_title($conn, $menu_id, $lang_id)
+{
+  $sql = "SELECT `menu_title`
+            FROM `menu_title`
+            WHERE `menu_id` = :menu_id
+              AND `lang_id` = :lang_id";
+  $sth = $conn->prepare($sql);
+  $sth->execute(array(
+    ":menu_id" => $menu_id,
+    ":lang_id" => $lang_id
+  ));
+  $result = $sth->fetch();
+  return $result["menu_title"];
+}
+
+function get_active_page_name($conn, $page, $lang_id)
+{
+  $menu_id = get_page_id($conn, $page);
+  $menu_title = get_page_title($conn, $menu_id, $lang_id);
+  return $menu_title;
+}
+
 // ============================================================================
 // READ ADMIN MENU
 // ============================================================================
