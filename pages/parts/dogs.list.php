@@ -17,7 +17,7 @@
     <div class="row">
 <?php foreach ($dogs as $dog) :
 $img_url = SITE . "public/img/dogs/thumbs/" . $dog["images"]["dog_image_link"] . ".jpg";
-$edit_url = SITE . "males/" . $dog["id"];
+$edit_url = SITE . $page . "/" . $dog["id"];
 ?>
 
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">

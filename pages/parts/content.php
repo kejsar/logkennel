@@ -13,7 +13,7 @@ if ($page === "admin" && AUTH) {
   require BLOCKS_DIR . "menu.admin.php";
 }
 
-if (SECTION === "males" || SECTION === "females" || SECTION === "sale") {
+if (SECTION === "males" || SECTION === "females" || SECTION === "for-sale") {
   $path = CONTENT_DIR . "cart";
 }
 

@@ -1,6 +1,7 @@
 <?php
 
 $dog = get_dog($conn, PAGE, LANG);
+$gender_name = get_gender_name($conn, $dog["gender_type"], LANG);
 $dog_main_image = get_dog_main_image($conn, $dog["id"]);
 $dog_images = get_dog_images($conn, $dog["id"]);
 $img_url = SITE . "public/img/dogs/" . $dog_main_image["dog_image_link"] . ".jpg";
@@ -49,7 +50,10 @@ $thmb_url = SITE . "public/img/dogs/thumbs/" . $dog_main_image["dog_image_link"]
             </div>
 
             <div class="row">
-              <div class="col-5 col-xl-4"><?=$dog["dog_birth"]?></div>
+              <div class="col"><?=$dog["dog_birth"]?></div>
+              <?php if (SECTION === "for-sale") : ?>
+              <div class="col text-right"><?=$gender_name?></div>
+              <?php endif; ?>
             </div>
                 
             <div class="row">
