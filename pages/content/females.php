@@ -1,10 +1,9 @@
+<?php
 
-<section class="females">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        females
-      </div>
-    </div>
-  </div>
-</section>
+$type = "females";
+$dogs = get_dogs($conn, $type, LANG);
+foreach ($dogs as $key => $dog) {
+  $dogs[$key]["images"] = get_dog_main_image($conn, $dog["id"]);
+}
+
+require PARTS_DIR . "dogs.list.php";

@@ -46,9 +46,8 @@ function update_block_image_alt_text($conn, $block_id, $block_image_alt_text)
 
 function update_block($conn, $block_title, $block_text, $block_id, $lang_id)
 {
-  $title_updated = update_block_title($conn, $block_title, $block_id, $lang_id);
-  $text_updated = update_block_text($conn, $block_text, $block_id, $lang_id);
-  return $title_updated && $text_updated;
+  update_block_title($conn, $block_title, $block_id, $lang_id);
+  update_block_text($conn, $block_text, $block_id, $lang_id);
 }
 
 // ============================================================================
