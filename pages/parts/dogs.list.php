@@ -10,6 +10,7 @@
 
 <?php foreach ($dogs as $dog) :
 $img_url = SITE . "public/img/dogs/thumbs/" . $dog["images"]["dog_image_link"] . ".jpg";
+$edit_url = SITE . "males/" . $dog["id"];
 ?>
 
     <div class="row">

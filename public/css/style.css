@@ -51,6 +51,18 @@ img#card-img-top {
   height: 100px;
 }
 
+.img-square-main {
+  display: block;
+  padding: .25rem;
+  background-color: #fff;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid #dee2e6;
+  border-radius: .25rem;
+  height: 300px;
+}
+
 #delete-form {
   display: none;
 }

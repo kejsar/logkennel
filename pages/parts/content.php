@@ -11,6 +11,10 @@ if ($page === "admin" && AUTH) {
   require BLOCKS_DIR . "menu.admin.php";
 }
 
+if (SECTION === "males" || SECTION === "females" || SECTION === "sale") {
+  $path = CONTENT_DIR . "cart";
+}
+
 require $path . ".php";
 
 require BLOCKS_DIR . "footer.php";

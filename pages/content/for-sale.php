@@ -1,6 +1,6 @@
 <?php
 
-$type = "for-sale";
+$type = "for_sale";
 $dogs = get_dogs($conn, $type, LANG);
 foreach ($dogs as $key => $dog) {
   $dogs[$key]["images"] = get_dog_main_image($conn, $dog["id"]);
