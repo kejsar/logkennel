@@ -7,23 +7,11 @@ $news_list = get_news_list($conn, LANG);
 <section class="news">
   <div class="container">
 
-    <div class="row">
-      <div class="col">
-        <h1 class="display-4"><?=$page_title?></h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <hr>
-      </div>
-    </div>
-
 <?php foreach ($news_list as $news_item) : 
 $images = get_news_image_list($conn, $news_item["id"]);
 $img_url = SITE . "public/img/news/thumbs/" . $news_item["image"]["news_image_link"] . ".jpg";
 ?>
-    <div class="row">
+    <div class="row my-5 py-5">
 
       <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
         <div style="background-image: url(<?=$img_url?>)" class="img-thumbnail"></div>
@@ -38,20 +26,8 @@ $img_url = SITE . "public/img/news/thumbs/" . $news_item["image"]["news_image_li
         </div>
 
         <div class="row">
-          <div class="col">
-            <hr>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <?=$news_item["news_day"]?>-<?=$news_item["news_month"]?>-<?=$news_item["news_year"]?>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <hr>
+          <div class="col py-4">
+            <strong><?=$news_item["news_day"]?>-<?=$news_item["news_month"]?>-<?=$news_item["news_year"]?></strong>
           </div>
         </div>
 
@@ -61,11 +37,11 @@ $img_url = SITE . "public/img/news/thumbs/" . $news_item["image"]["news_image_li
           </div>
         </div>
 
-        <div class="row justify-content-start">
+        <div class="row justify-content-start pt-4">
           <div class="col">
             <div class="row">
 <?php foreach ($images as $image) : ?>
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+              <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2 my-3">
                 <a href="<?=SITE?>public/img/news/<?=$image["news_image_link"]?>.jpg" 
                   data-toggle="lightbox" 
                   data-gallery="example-gallery" 
@@ -80,12 +56,6 @@ $img_url = SITE . "public/img/news/thumbs/" . $news_item["image"]["news_image_li
 
       </div>
 
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <hr>
-      </div>
     </div>
 <?php endforeach; ?>
 

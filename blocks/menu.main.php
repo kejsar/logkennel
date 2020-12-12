@@ -12,8 +12,8 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbar-content">
-            <ul class="navbar-nav mr-auto">
+          <div class="collapse navbar-collapse justify-content-center" id="navbar-content">
+            <ul class="navbar-nav">
 <?php
 
 $menu = get_menu($conn, LANG);
@@ -21,7 +21,7 @@ $menu = get_menu($conn, LANG);
 foreach($menu as $menu_item) {
   $active = $page === $menu_item["menu_link"] ? " active" : "";
   echo "<li class=\"nav-item\">";
-  echo "  <a class=\"nav-link" . $active . "\" href=\"" . SITE . $menu_item["menu_link"] . "\">" . $menu_item["menu_title"] . "</a>";
+  echo "  <a class=\"nav-link" . $active . "\" href=\"" . SITE . $menu_item["menu_link"] . "\"><strong>" . $menu_item["menu_title"] . "</strong></a>";
   echo "</li>";
 }
 

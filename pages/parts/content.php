@@ -14,7 +14,7 @@ if ($page === "admin" && AUTH) {
 }
 
 if (SECTION === "males" || SECTION === "females" || SECTION === "for-sale") {
-  $path = CONTENT_DIR . "cart";
+  $path = BLOCKS_DIR . "dog.cart";
 }
 
 require $path . ".php";

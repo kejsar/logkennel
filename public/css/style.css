@@ -1,11 +1,15 @@
 #lk-main-menu {
-  background-color: #f8f9fa;
+  background-color: #fff;
 }
 
-.lk-flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@media all and (max-width: 575px) {
+  .lk-header {
+    font-size: 3.5rem;
+    text-align: center;
+  }
+  .lk-sub-header {
+    text-align: center;
+  }
 }
 
 .lk-round-border {
@@ -20,17 +24,17 @@
 }
 
 img#card-img-top {
-  border-radius: calc(.25rem - 1px);
+  border-radius: calc(0.25rem - 1px);
 }
 
 .img-thumbnail {
-  padding: .25rem;
+  padding: 0.25rem;
   background-color: #fff;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   border: 1px solid #dee2e6;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   width: auto;
   height: 200px;
 
@@ -41,31 +45,32 @@ img#card-img-top {
 
 .img-square {
   display: block;
-  padding: .25rem;
+  padding: 0.25rem;
   background-color: #fff;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   border: 1px solid #dee2e6;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   height: 100px;
 }
 
 .img-square-main {
   display: block;
-  padding: .25rem;
+  padding: 0.25rem;
   background-color: #fff;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   border: 1px solid #dee2e6;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   height: 300px;
 }
 
 #delete-form {
   display: none;
 }
+
 .delete-image-button {
   display: none;
 }

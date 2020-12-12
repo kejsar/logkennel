@@ -4,7 +4,7 @@
 
     <div class="row">
       <div class="col">
-        <h1 class="display-4"><?=$page_title?></h1>
+        <h1 class="display-4 mt-5 mb-4"><?=$page_title?></h1>
       </div>
     </div>
 
